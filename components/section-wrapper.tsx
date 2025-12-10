@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
 
 interface SectionWrapperProps {
@@ -21,32 +21,29 @@ export default function SectionWrapper({
   parallaxIntensity = 50,
 }: SectionWrapperProps) {
   const ref = useRef(null)
+  const [hasAnimated, setHasAnimated] = useState(false)
   const isInView = useInView(ref, { 
-    once: false, 
+    once: true, 
     margin: "-10% 0px -10% 0px" 
   })
+
+  // Track if animation has completed
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true)
+    }
+  }, [isInView, hasAnimated])
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   })
 
+  // Only parallax Y position, keep opacity and scale at 1 after first view
   const y = useTransform(
     scrollYProgress, 
     [0, 1], 
     [parallax ? parallaxIntensity : 0, parallax ? -parallaxIntensity : 0]
-  )
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.8, 1],
-    [0.6, 1, 1, 0.6]
-  )
-
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.8, 1],
-    [0.95, 1, 1, 0.95]
   )
 
   const animationVariants = {
@@ -98,21 +95,15 @@ export default function SectionWrapper({
       id={id}
       className={`relative ${className}`}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      animate={isInView || hasAnimated ? "visible" : "hidden"}
       variants={animationVariants[animation]}
       style={{ 
         y: parallax ? y : 0,
       }}
     >
-      <motion.div 
-        style={{ 
-          opacity: parallax ? opacity : 1,
-          scale: parallax ? scale : 1,
-        }}
-        className="relative z-10"
-      >
+      <div className="relative z-10">
         {children}
-      </motion.div>
+      </div>
     </motion.section>
   )
 }

@@ -442,6 +442,7 @@ export const SectionDivider = ({
             fillOpacity="0.1"
             initial={{ pathLength: 0 }}
             whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
             transition={{ duration: 1.5, ease: "easeOut" }}
           />
         </svg>
@@ -486,6 +487,7 @@ export const SectionDivider = ({
               scale: 1,
               y: 0,
             }}
+            viewport={{ once: true }}
             transition={{
               duration: 0.4,
               delay: i * 0.02,
@@ -512,6 +514,7 @@ export const SectionDivider = ({
           }}
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
@@ -525,6 +528,7 @@ export const SectionDivider = ({
           }}
           initial={{ rotate: -180, scale: 0 }}
           whileInView={{ rotate: 0, scale: 1 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6, type: "spring" }}
         >
           <Sparkles className="w-5 h-5 text-ready-black" />
