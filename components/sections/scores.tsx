@@ -91,8 +91,8 @@ const testimonials = [
 const videoShowcases = [
   {
     id: 1,
-    videoUrl: "/videos/caso-1.mp4", // Reemplazar con video real
-    thumbnail: "/images/video-thumb-1.jpg", // Reemplazar con thumbnail real
+    videoUrl: "/videos/caso-1.mp4",
+    thumbnail: "/images/video-thumb-1.jpg",
     title: "Caso de Éxito #1",
     subtitle: "Colaboración Huawei",
     result: "+200% ventas"
@@ -181,13 +181,81 @@ function VideoModal({
   title: string
 }) {
   const [isMuted, setIsMuted] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
+  // Detect mobile on mount
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Auto-play and fullscreen on mobile when modal opens
   useEffect(() => {
     if (isOpen && videoRef.current) {
-      videoRef.current.play()
+      videoRef.current.currentTime = 0
+      
+      // On mobile, go straight to fullscreen and play
+      if (isMobile) {
+        const video = videoRef.current
+        
+        const playFullscreen = async () => {
+          try {
+            // iOS Safari uses webkitEnterFullscreen on the video element
+            if ((video as any).webkitEnterFullscreen) {
+              await (video as any).webkitEnterFullscreen()
+            } else if ((video as any).webkitRequestFullscreen) {
+              await (video as any).webkitRequestFullscreen()
+            } else if (video.requestFullscreen) {
+              await video.requestFullscreen()
+            }
+            await video.play()
+            setIsPlaying(true)
+          } catch (err) {
+            console.log('Fullscreen/play error:', err)
+            // Fallback: just play without fullscreen
+            try {
+              await video.play()
+              setIsPlaying(true)
+            } catch (playErr) {
+              console.log('Play error:', playErr)
+            }
+          }
+        }
+        
+        // Small delay to ensure modal is rendered
+        setTimeout(playFullscreen, 100)
+      }
     }
-  }, [isOpen])
+    
+    if (!isOpen && videoRef.current) {
+      videoRef.current.pause()
+      setIsPlaying(false)
+    }
+  }, [isOpen, isMobile])
+
+  // Handle fullscreen exit - close modal on mobile
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && 
+          !(document as any).webkitFullscreenElement && 
+          isMobile && isOpen) {
+        onClose()
+      }
+    }
+    
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+    }
+  }, [isMobile, isOpen, onClose])
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -203,6 +271,26 @@ function VideoModal({
     }
   }, [isOpen, onClose])
 
+  // Handle manual play (for when autoplay fails)
+  const handlePlayVideo = async () => {
+    if (videoRef.current) {
+      try {
+        if (isMobile) {
+          // Try fullscreen again on tap
+          if ((videoRef.current as any).webkitEnterFullscreen) {
+            await (videoRef.current as any).webkitEnterFullscreen()
+          } else if (videoRef.current.requestFullscreen) {
+            await videoRef.current.requestFullscreen()
+          }
+        }
+        await videoRef.current.play()
+        setIsPlaying(true)
+      } catch (error) {
+        console.log('Play error:', error)
+      }
+    }
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -210,82 +298,89 @@ function VideoModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black"
           onClick={onClose}
         >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-ready-black/95 backdrop-blur-xl" />
-          
-          {/* Modal Content */}
+          {/* Desktop: Vertical video container */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 10 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-4xl z-10"
+            ref={containerRef}
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="relative z-10 w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={onClose}
-              className="absolute -top-12 right-0 w-10 h-10 rounded-full 
-                        bg-white/10 border border-white/20
+              className="absolute top-4 right-4 z-50 w-12 h-12 rounded-full 
+                        bg-black/60 backdrop-blur-sm border border-white/20
                         flex items-center justify-center
-                        text-ready-cream hover:text-ready-orange
-                        hover:border-ready-orange/50
+                        text-white hover:text-ready-orange
                         transition-all duration-300"
             >
-              <X className="w-5 h-5" />
-            </motion.button>
+              <X className="w-6 h-6" />
+            </button>
 
-            {/* Video Container */}
-            <div className="relative rounded-2xl overflow-hidden 
-                           border-2 border-ready-orange/30 
-                           shadow-[0_0_60px_rgba(242,146,29,0.15)]">
-              {/* Arcade Corner Decorations */}
-              <div className="absolute top-0 left-0 w-8 h-8 
-                             border-t-2 border-l-2 border-ready-orange z-10" />
-              <div className="absolute top-0 right-0 w-8 h-8 
-                             border-t-2 border-r-2 border-ready-orange z-10" />
-              <div className="absolute bottom-0 left-0 w-8 h-8 
-                             border-b-2 border-l-2 border-ready-orange z-10" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 
-                             border-b-2 border-r-2 border-ready-orange z-10" />
-
+            {/* Video - Full height vertical on desktop */}
+            <div className="relative h-full max-h-[100dvh] aspect-[9/16] bg-black">
               <video
                 ref={videoRef}
                 src={videoUrl}
                 muted={isMuted}
                 controls
                 playsInline
-                className="w-full aspect-video bg-ready-black"
+                preload="auto"
+                webkit-playsinline="true"
+                className="w-full h-full object-contain"
+                style={{ backgroundColor: 'black' }}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onEnded={() => {
+                  setIsPlaying(false)
+                  if (isMobile) onClose()
+                }}
               />
 
-              {/* Title Bar */}
-              <div className="absolute top-0 left-0 right-0 
-                             bg-gradient-to-b from-ready-black/80 to-transparent
-                             p-4 flex items-center justify-between">
-                <h3 className="font-display text-ready-cream font-bold">
-                  {title}
-                </h3>
-                <button
-                  onClick={() => setIsMuted(!isMuted)}
-                  className="w-8 h-8 rounded-lg bg-white/10 
-                            flex items-center justify-center
-                            text-ready-cream hover:text-ready-orange
-                            transition-colors duration-300"
+              {/* Play overlay - shows when not playing */}
+              {!isPlaying && (
+                <div 
+                  className="absolute inset-0 flex flex-col items-center justify-center 
+                             bg-black/50 cursor-pointer z-20"
+                  onClick={handlePlayVideo}
                 >
-                  {isMuted ? (
-                    <VolumeX className="w-4 h-4" />
-                  ) : (
-                    <Volume2 className="w-4 h-4" />
-                  )}
-                </button>
-              </div>
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-full bg-ready-orange/30 animate-ping" />
+                    <div className="relative w-20 h-20 rounded-full bg-ready-orange 
+                                   flex items-center justify-center
+                                   shadow-[0_0_60px_rgba(242,146,29,0.6)]">
+                      <Play className="w-10 h-10 text-black fill-black ml-1" />
+                    </div>
+                  </div>
+                  <p className="mt-6 text-white text-lg font-medium">{title}</p>
+                  <p className="mt-2 text-white/60 text-sm">Toca para reproducir</p>
+                </div>
+              )}
             </div>
+
+            {/* Sound toggle - desktop only */}
+            {!isMobile && isPlaying && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsMuted(!isMuted)
+                }}
+                className="absolute bottom-8 right-8 z-50 w-12 h-12 rounded-full 
+                          bg-black/60 backdrop-blur-sm border border-white/20
+                          flex items-center justify-center
+                          text-white hover:text-ready-orange
+                          transition-all duration-300"
+              >
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+            )}
           </motion.div>
         </motion.div>
       )}
@@ -317,7 +412,8 @@ function VideoCard({
       className="relative group cursor-pointer"
       onClick={onPlay}
     >
-      <div className="relative aspect-[9/16] sm:aspect-video rounded-xl overflow-hidden
+      {/* Vertical aspect ratio for social media content */}
+      <div className="relative aspect-[9/16] rounded-xl overflow-hidden
                      border border-white/10 
                      group-hover:border-ready-orange/50
                      transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -325,21 +421,22 @@ function VideoCard({
         
         {/* Thumbnail / Placeholder */}
         <div className="absolute inset-0 bg-gradient-to-br from-ready-black-light to-ready-black">
-          {video.thumbnail ? (
+          {video.thumbnail && (
             <Image
               src={video.thumbnail}
               alt={video.title}
               fill
+              unoptimized
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
               className="object-cover opacity-80 group-hover:opacity-100
                         group-hover:scale-105
                         transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
             />
-          ) : (
-            // Placeholder pattern cuando no hay thumbnail
-            <div className="absolute inset-0 
-                           bg-[linear-gradient(45deg,transparent_25%,rgba(242,146,29,0.03)_25%,rgba(242,146,29,0.03)_50%,transparent_50%,transparent_75%,rgba(242,146,29,0.03)_75%)]
-                           bg-[length:20px_20px]" />
           )}
+          {/* Placeholder pattern siempre visible como fondo */}
+          <div className="absolute inset-0 -z-10
+                         bg-[linear-gradient(45deg,transparent_25%,rgba(242,146,29,0.05)_25%,rgba(242,146,29,0.05)_50%,transparent_50%,transparent_75%,rgba(242,146,29,0.05)_75%)]
+                         bg-[length:20px_20px]" />
         </div>
 
         {/* Overlay Gradient */}
@@ -550,7 +647,9 @@ export function Scores() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Grid optimizado para videos verticales */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6
+                         max-w-6xl mx-auto">
             {videoShowcases.map((video, index) => (
               <VideoCard
                 key={video.id}

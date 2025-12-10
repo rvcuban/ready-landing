@@ -37,3 +37,18 @@ declare module '*.webp' {
   const content: string;
   export default content;
 }
+
+// Extend video element props for mobile playback attributes
+declare namespace JSX {
+  interface IntrinsicElements {
+    video: React.DetailedHTMLProps<
+      React.VideoHTMLAttributes<HTMLVideoElement> & {
+        'webkit-playsinline'?: string;
+        'x5-playsinline'?: string;
+        'x5-video-player-type'?: string;
+        'x5-video-player-fullscreen'?: string;
+      },
+      HTMLVideoElement
+    >;
+  }
+}
