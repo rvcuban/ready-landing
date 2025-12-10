@@ -53,20 +53,48 @@ export function Contact() {
     company: "",
     message: ""
   })
+  const [error, setError] = useState("")
+
+  // ⚠️ IMPORTANTE: Reemplaza "TU_FORM_ID" con tu ID de Formspree
+  // Obtén tu ID gratis en: https://formspree.io
+  const FORMSPREE_ID = "TU_FORM_ID"
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError("")
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    setFormData({ name: "", email: "", company: "", message: "" })
-    
-    // Reset after showing success
-    setTimeout(() => setIsSubmitted(false), 5000)
+    try {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: formData.message,
+          _subject: `🎮 Nuevo mensaje de ${formData.name} - READY?`
+        })
+      })
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setFormData({ name: "", email: "", company: "", message: "" })
+        // Reset success message after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000)
+      } else {
+        const data = await response.json()
+        throw new Error(data.error || "Error al enviar el mensaje")
+      }
+    } catch (err) {
+      setError("Hubo un error. Intenta de nuevo o escríbenos directamente a hola@estudioready.es")
+      console.error("Form error:", err)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (
@@ -276,6 +304,13 @@ export function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  {/* Error message */}
+                  {error && (
+                    <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
+                      {error}
+                    </div>
+                  )}
+                  
                   <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                     <div>
                       <label 

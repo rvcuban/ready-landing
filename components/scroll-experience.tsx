@@ -110,26 +110,43 @@ const SectionDotsNav = () => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 300)
 
-      const sectionElements = sections.map(s => ({
-        id: s.id,
-        element: document.getElementById(s.id)
-      })).filter(s => s.element)
-
       const viewportHeight = window.innerHeight
-      const scrollPosition = window.scrollY + viewportHeight / 3
+      const viewportCenter = viewportHeight / 2
 
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { id, element } = sectionElements[i]
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(id)
-          break
+      let currentSection = "hero"
+      let minDistance = Infinity
+
+      // Find the section closest to the center of the viewport
+      for (const section of sections) {
+        const element = document.getElementById(section.id)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          const sectionCenter = rect.top + rect.height / 2
+          const distance = Math.abs(sectionCenter - viewportCenter)
+          
+          // Check if section is at least partially visible
+          const isVisible = rect.top < viewportHeight && rect.bottom > 0
+          
+          if (isVisible && distance < minDistance) {
+            minDistance = distance
+            currentSection = section.id
+          }
         }
       }
+
+      setActiveSection(currentSection)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
+    handleScroll() // Initial check
+    
+    // Also run on resize in case sections change size
+    window.addEventListener("resize", handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", handleScroll)
+    }
   }, [])
 
   const scrollToSection = (id: string) => {
