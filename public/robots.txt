@@ -1,0 +1,13 @@
+# Robots.txt para READY? Estudio Creativo
+# https://estudioready.es
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://estudioready.es/sitemap.xml
+
+# Bloquear rutas innecesarias
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
