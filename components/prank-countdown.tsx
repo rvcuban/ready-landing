@@ -146,27 +146,6 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      {/* Botón para activar sonido - GRANDE Y VISIBLE si no ha interactuado */}
-      {!hasInteracted && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, type: "spring" }}
-          onClick={() => setHasInteracted(true)}
-          className="fixed bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 
-                     px-4 py-2 sm:px-6 sm:py-3 rounded-full
-                     bg-ready-orange text-ready-black font-bold text-sm sm:text-base
-                     flex items-center gap-2
-                     hover:bg-ready-orange/90 hover:scale-105
-                     transition-all duration-300
-                     shadow-[0_0_30px_rgba(242,146,29,0.5)]
-                     animate-pulse"
-        >
-          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
-          <span>🔊 Activar Sonido</span>
-        </motion.button>
-      )}
-
       {/* Sound Toggle Button - Pequeño en esquina */}
       {hasInteracted && (
         <motion.button
@@ -300,6 +279,29 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
             READY<span className="text-ready-orange">?</span>
           </h1>
         </motion.div>
+
+        {/* Botón para activar sonido - Integrado en el contenido */}
+        {!hasInteracted && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, type: "spring" }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setHasInteracted(true);
+            }}
+            className="mb-4 sm:mb-8 px-6 py-3 sm:px-10 sm:py-4 rounded-full
+                       bg-ready-orange text-ready-black font-bold text-sm sm:text-lg
+                       flex items-center gap-2 mx-auto
+                       hover:bg-ready-orange/90 hover:scale-105
+                       transition-all duration-300
+                       shadow-[0_0_40px_rgba(242,146,29,0.5)]
+                       animate-pulse"
+          >
+            <Volume2 className="w-5 h-5 sm:w-6 sm:h-6" />
+            <span>🔊 Haz click para activar el sonido</span>
+          </motion.button>
+        )}
 
         {/* Glitch Title */}
         <motion.div
