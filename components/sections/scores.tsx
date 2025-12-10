@@ -180,240 +180,87 @@ function VideoModal({
   videoUrl: string
   title: string
 }) {
-  const [isMuted, setIsMuted] = useState(false)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
 
-  // Exit fullscreen helper function
-  const exitFullscreen = async () => {
-    try {
-      if (document.fullscreenElement) {
-        await document.exitFullscreen()
-      } else if ((document as any).webkitFullscreenElement) {
-        await (document as any).webkitExitFullscreen()
-      }
-    } catch (err) {
-      console.log('Exit fullscreen error:', err)
-    }
-  }
-
-  // Enhanced close handler that exits fullscreen first
-  const handleClose = async () => {
-    // Pause video
+  // Simple close - just close the modal
+  const handleClose = () => {
     if (videoRef.current) {
       videoRef.current.pause()
+      videoRef.current.currentTime = 0
     }
-    // Exit fullscreen if active
-    await exitFullscreen()
-    // Restore body scroll
     document.body.style.overflow = ""
-    // Close modal
     onClose()
   }
 
-  // Detect mobile on mount
+  // Handle body scroll lock
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768)
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  // Auto-play and fullscreen on mobile when modal opens
-  useEffect(() => {
-    if (isOpen && videoRef.current) {
-      videoRef.current.currentTime = 0
-      
-      // On mobile, go straight to fullscreen and play
-      if (isMobile) {
-        const video = videoRef.current
-        
-        const playFullscreen = async () => {
-          try {
-            // iOS Safari uses webkitEnterFullscreen on the video element
-            if ((video as any).webkitEnterFullscreen) {
-              await (video as any).webkitEnterFullscreen()
-            } else if ((video as any).webkitRequestFullscreen) {
-              await (video as any).webkitRequestFullscreen()
-            } else if (video.requestFullscreen) {
-              await video.requestFullscreen()
-            }
-            await video.play()
-            setIsPlaying(true)
-          } catch (err) {
-            console.log('Fullscreen/play error:', err)
-            // Fallback: just play without fullscreen
-            try {
-              await video.play()
-              setIsPlaying(true)
-            } catch (playErr) {
-              console.log('Play error:', playErr)
-            }
-          }
-        }
-        
-        // Small delay to ensure modal is rendered
-        setTimeout(playFullscreen, 100)
-      }
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
     }
-    
-    if (!isOpen && videoRef.current) {
-      videoRef.current.pause()
-      setIsPlaying(false)
-    }
-  }, [isOpen, isMobile])
-
-  // Handle fullscreen exit - close modal on mobile
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      if (!document.fullscreenElement && 
-          !(document as any).webkitFullscreenElement && 
-          isMobile && isOpen) {
-        // Restore scroll before closing
-        document.body.style.overflow = ""
-        onClose()
-      }
-    }
-    
-    document.addEventListener('fullscreenchange', handleFullscreenChange)
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange)
-    
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange)
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange)
+      document.body.style.overflow = ""
     }
-  }, [isMobile, isOpen, onClose])
+  }, [isOpen])
 
+  // Handle escape key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") handleClose()
     }
     if (isOpen) {
       document.addEventListener("keydown", handleEsc)
-      document.body.style.overflow = "hidden"
     }
     return () => {
       document.removeEventListener("keydown", handleEsc)
-      document.body.style.overflow = ""
     }
   }, [isOpen])
 
-  // Handle manual play (for when autoplay fails)
-  const handlePlayVideo = async () => {
-    if (videoRef.current) {
-      try {
-        if (isMobile) {
-          // Try fullscreen again on tap
-          if ((videoRef.current as any).webkitEnterFullscreen) {
-            await (videoRef.current as any).webkitEnterFullscreen()
-          } else if (videoRef.current.requestFullscreen) {
-            await videoRef.current.requestFullscreen()
-          }
-        }
-        await videoRef.current.play()
-        setIsPlaying(true)
-      } catch (error) {
-        console.log('Play error:', error)
-      }
+  // Reset video when opening
+  useEffect(() => {
+    if (isOpen && videoRef.current) {
+      videoRef.current.currentTime = 0
     }
-  }
+  }, [isOpen])
+
+  if (!isOpen) return null
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black"
-          onClick={handleClose}
-        >
-          {/* Desktop: Vertical video container */}
-          <motion.div
-            ref={containerRef}
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="relative z-10 w-full h-full flex items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close Button */}
-            <button
-              onClick={handleClose}
-              className="absolute top-4 right-4 z-50 w-12 h-12 rounded-full 
-                        bg-black/60 backdrop-blur-sm border border-white/20
-                        flex items-center justify-center
-                        text-white hover:text-ready-orange
-                        transition-all duration-300"
-            >
-              <X className="w-6 h-6" />
-            </button>
+    <div 
+      className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center"
+      onClick={handleClose}
+    >
+      {/* Close Button - Always visible and on top */}
+      <button
+        onClick={handleClose}
+        className="absolute top-4 right-4 z-[10000] w-14 h-14 rounded-full 
+                  bg-ready-orange text-black
+                  flex items-center justify-center
+                  shadow-lg active:scale-95
+                  transition-transform duration-150"
+        aria-label="Cerrar video"
+      >
+        <X className="w-8 h-8" strokeWidth={3} />
+      </button>
 
-            {/* Video - Full height vertical on desktop */}
-            <div className="relative h-full max-h-[100dvh] aspect-[9/16] bg-black">
-              <video
-                ref={videoRef}
-                src={videoUrl}
-                muted={isMuted}
-                controls
-                playsInline
-                preload="auto"
-                webkit-playsinline="true"
-                className="w-full h-full object-contain"
-                style={{ backgroundColor: 'black' }}
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                onEnded={() => {
-                  setIsPlaying(false)
-                  if (isMobile) handleClose()
-                }}
-              />
-
-              {/* Play overlay - shows when not playing */}
-              {!isPlaying && (
-                <div 
-                  className="absolute inset-0 flex flex-col items-center justify-center 
-                             bg-black/50 cursor-pointer z-20"
-                  onClick={handlePlayVideo}
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-ready-orange/30 animate-ping" />
-                    <div className="relative w-20 h-20 rounded-full bg-ready-orange 
-                                   flex items-center justify-center
-                                   shadow-[0_0_60px_rgba(242,146,29,0.6)]">
-                      <Play className="w-10 h-10 text-black fill-black ml-1" />
-                    </div>
-                  </div>
-                  <p className="mt-6 text-white text-lg font-medium">{title}</p>
-                  <p className="mt-2 text-white/60 text-sm">Toca para reproducir</p>
-                </div>
-              )}
-            </div>
-
-            {/* Sound toggle - desktop only */}
-            {!isMobile && isPlaying && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsMuted(!isMuted)
-                }}
-                className="absolute bottom-8 right-8 z-50 w-12 h-12 rounded-full 
-                          bg-black/60 backdrop-blur-sm border border-white/20
-                          flex items-center justify-center
-                          text-white hover:text-ready-orange
-                          transition-all duration-300"
-              >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
-              </button>
-            )}
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      {/* Video Container - Vertical format */}
+      <div 
+        className="relative w-full h-full max-w-[400px] max-h-[90vh] mx-auto
+                   flex items-center justify-center p-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          controls
+          playsInline
+          autoPlay
+          className="w-full h-auto max-h-full rounded-lg object-contain"
+          style={{ maxHeight: 'calc(100vh - 100px)' }}
+        />
+      </div>
+    </div>
   )
 }
 
