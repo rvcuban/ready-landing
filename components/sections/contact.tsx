@@ -1,0 +1,384 @@
+"use client"
+
+import { useRef, useState } from "react"
+import { motion, useInView } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { 
+  Loader2,
+  CheckCircle,
+  Gamepad2
+} from "lucide-react"
+
+// Premium Easing
+const easeOutExpo = [0.16, 1, 0.3, 1]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 28,
+    filter: "blur(8px)"
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    filter: "blur(0px)",
+    transition: { 
+      duration: 0.7, 
+      ease: easeOutExpo 
+    }
+  }
+}
+
+export function Contact() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: ""
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    
+    setIsSubmitting(false)
+    setIsSubmitted(true)
+    setFormData({ name: "", email: "", company: "", message: "" })
+    
+    // Reset after showing success
+    setTimeout(() => setIsSubmitted(false), 5000)
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  return (
+    <section
+      id="contacto"
+      ref={sectionRef}
+      className="relative py-32 md:py-44 overflow-hidden"
+    >
+      {/* ═══════════════════════════════════════════════════
+          FONDO DRAMÁTICO - OSCURO CON GLOWS
+      ═══════════════════════════════════════════════════ */}
+      <div className="absolute inset-0 bg-[#0a0a0d]" />
+      
+      {/* Grid arcade sutil */}
+      <div 
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(242, 146, 29, 0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(242, 146, 29, 0.4) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }}
+      />
+
+      {/* Glow NARANJA izquierdo */}
+      <div 
+        className="absolute top-1/2 -left-60 w-[800px] h-[800px] -translate-y-1/2 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(242, 146, 29, 0.12) 0%, transparent 60%)',
+          filter: 'blur(100px)'
+        }}
+      />
+      
+      {/* Glow ROSA derecho */}
+      <div 
+        className="absolute top-1/2 -right-60 w-[800px] h-[800px] -translate-y-1/2 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, rgba(178, 23, 75, 0.12) 0%, transparent 60%)',
+          filter: 'blur(100px)'
+        }}
+      />
+
+      {/* Scanlines CRT effect */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.015]"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.4) 2px, rgba(0,0,0,0.4) 4px)'
+        }}
+      />
+
+      <div className="container relative mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 max-w-6xl mx-auto items-center">
+          
+          {/* ═══════════════════════════════════════════════════
+              LEFT: TEXTO DRAMÁTICO CON GLITCH REAL
+          ═══════════════════════════════════════════════════ */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="text-center lg:text-left"
+          >
+            {/* GAME OVER? con GLITCH REAL */}
+            <motion.div variants={itemVariants} className="mb-4">
+              <h2 
+                className="glitch-text font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-ready-orange"
+                data-text="GAME OVER?"
+                style={{
+                  textShadow: '0 0 40px rgba(242, 146, 29, 0.4), 0 0 80px rgba(242, 146, 29, 0.2)'
+                }}
+              >
+                GAME OVER?
+              </h2>
+            </motion.div>
+
+            {/* ...O CONTINUE? */}
+            <motion.h3 
+              variants={itemVariants}
+              className="font-display text-md sm:text-md md:text-xl font-bold text-ready-cream mb-10"
+            >
+              ...O{" "}
+              <span 
+                className="text-ready-pink relative inline-block"
+                style={{
+                  textShadow: '0 0 30px rgba(178, 23, 75, 0.5)'
+                }}
+              >
+                CONTINUE
+                <span 
+                  className="absolute -bottom-2 left-0 w-full h-1 bg-ready-pink rounded-full"
+                  style={{ 
+                    boxShadow: '0 0 15px rgba(178, 23, 75, 0.8), 0 0 30px rgba(178, 23, 75, 0.4)' 
+                  }}
+                />
+              </span>
+              ?
+            </motion.h3>
+
+            {/* Descripción épica */}
+            <motion.div variants={itemVariants} className="space-y-5 mb-10">
+              <p className="text-lg md:text-xl text-ready-cream/70 leading-relaxed">
+                Tu competencia ya está jugando.
+                <br />
+                <span className="text-ready-cream font-medium">
+                  Cada día que pasa, suman puntos.
+                </span>
+              </p>
+
+              <p className="text-lg md:text-xl text-ready-cream/60 leading-relaxed">
+                La pregunta no es si tienes que actuar.
+                <br />
+                <span 
+                  className="text-ready-orange font-semibold"
+                  style={{ textShadow: '0 0 20px rgba(242, 146, 29, 0.4)' }}
+                >
+                  Es cuántas fichas estás dispuesto a invertir.
+                </span>
+              </p>
+            </motion.div>
+
+            {/* ¿Hablamos? con cursor parpadeante */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex items-center gap-3 justify-center lg:justify-start"
+            >
+              <span 
+                className="text-ready-orange text-3xl"
+                style={{ 
+                  textShadow: '0 0 15px rgba(242, 146, 29, 0.8)',
+                  animation: 'pulse 2s ease-in-out infinite'
+                }}
+              >
+    
+              </span>
+              <span className="font-display text-2xl md:text-3xl font-bold text-ready-cream">
+                ¿Hablamos?
+              </span>
+              <span 
+                className="w-3 h-8 bg-ready-orange animate-blink"
+                style={{ boxShadow: '0 0 10px rgba(242, 146, 29, 0.6)' }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* ═══════════════════════════════════════════════════
+              RIGHT: FORMULARIO ESTILO ARCADE
+          ═══════════════════════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, x: 50, filter: "blur(12px)" }}
+            animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
+            transition={{ duration: 1, delay: 0.4, ease: easeOutExpo }}
+          >
+            <div 
+              className="relative p-8 md:p-10 rounded-2xl overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(242, 146, 29, 0.06) 0%, rgba(178, 23, 75, 0.06) 100%)',
+                border: '2px solid rgba(242, 146, 29, 0.15)',
+                boxShadow: `
+                  0 0 80px rgba(242, 146, 29, 0.08),
+                  0 0 40px rgba(178, 23, 75, 0.05),
+                  inset 0 1px 0 rgba(255,255,255,0.03)
+                `
+              }}
+            >
+              {/* Corner decorations arcade */}
+              <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-ready-orange/40" />
+              <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-ready-pink/40" />
+              <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-ready-pink/40" />
+              <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-ready-orange/40" />
+
+              {isSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-16"
+                >
+                  <div 
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%)',
+                      border: '2px solid rgba(34, 197, 94, 0.3)',
+                      boxShadow: '0 0 40px rgba(34, 197, 94, 0.2)'
+                    }}
+                  >
+                    <CheckCircle className="w-10 h-10 text-green-400" />
+                  </div>
+                  <h4 className="text-2xl font-display font-bold text-ready-cream mb-3">
+                    ¡MENSAJE ENVIADO!
+                  </h4>
+                  <p className="text-ready-cream/60 text-center">
+                    Te contactaremos en menos de 24h.
+                    <br />
+                    <span className="text-ready-orange">
+                      Prepárate para empezar a ganar.
+                    </span>
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label 
+                        className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                        style={{ color: '#F2921D' }}
+                      >
+                        PLAYER NAME
+                      </label>
+                      <Input
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Tu nombre"
+                        required
+                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                      />
+                    </div>
+                    <div>
+                      <label 
+                        className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                        style={{ color: '#F2921D' }}
+                      >
+                        EMAIL
+                      </label>
+                      <Input
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="tu@email.com"
+                        required
+                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label 
+                      className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                      style={{ color: '#F2921D' }}
+                    >
+                      COMPANY
+                    </label>
+                    <Input
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      placeholder="Tu empresa (opcional)"
+                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                    />
+                  </div>
+
+                  <div>
+                    <label 
+                      className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                      style={{ color: '#F2921D' }}
+                    >
+                      MESSAGE
+                    </label>
+                    <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="¿Qué máquina te interesa?"
+                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 min-h-[100px]"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full text-base font-display font-bold uppercase tracking-wide bg-gradient-to-r from-ready-orange to-ready-pink hover:from-ready-orange/90 hover:to-ready-pink/90 text-ready-black transition-all duration-500"
+                    style={{
+                      boxShadow: '0 0 30px rgba(242, 146, 29, 0.3), 0 0 60px rgba(178, 23, 75, 0.15)'
+                    }}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        ENVIANDO...
+                      </>
+                    ) : (
+                      <>
+                        <Gamepad2 className="w-5 h-5 mr-2" />
+                        INSERTAR FICHA
+                      </>
+                    )}
+                  </Button>
+
+                  <p className="text-center text-sm text-ready-cream/40 pt-2">
+                    Respondemos en menos de 24h.
+                    <br />
+                    <span className="text-ready-cream/50">
+                      Sin bots, sin templates. Personas reales.
+                    </span>
+                  </p>
+                </form>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}

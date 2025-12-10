@@ -1,0 +1,330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 14 15 20;
+    --foreground: 255 241 230;
+    --card: 26 27 34;
+    --card-foreground: 255 241 230;
+    --popover: 14 15 20;
+    --popover-foreground: 255 241 230;
+    --primary: 242 146 29;
+    --primary-foreground: 14 15 20;
+    --secondary: 178 23 75;
+    --secondary-foreground: 255 241 230;
+    --muted: 26 27 34;
+    --muted-foreground: 255 241 230 / 0.7;
+    --accent: 242 146 29;
+    --accent-foreground: 14 15 20;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 241 230;
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.1;
+    --ring: 242 146 29;
+    --radius: 0.75rem;
+    
+    /* Premium Animation Timings */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+    --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-ready-black text-ready-cream font-body antialiased;
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+    text-wrap: balance;
+  }
+  
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-ready-orange text-ready-black;
+  }
+}
+
+@layer components {
+  /* Pixel Text Style */
+  .pixel-text {
+    @apply font-pixel text-[10px] tracking-wider uppercase;
+  }
+
+  /* Neon Text Effect - More subtle */
+  .neon-text {
+    text-shadow: 
+      0 0 10px rgba(242, 146, 29, 0.5),
+      0 0 30px rgba(242, 146, 29, 0.3);
+  }
+
+  .neon-text-pink {
+    text-shadow: 
+      0 0 10px rgba(178, 23, 75, 0.5),
+      0 0 30px rgba(178, 23, 75, 0.3);
+  }
+
+  /* CRT Overlay Effect - Much more subtle */
+  .crt-overlay {
+    @apply pointer-events-none fixed inset-0 z-[9999];
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    opacity: 0.15;
+  }
+
+  /* Grid Background - More elegant */
+  .bg-arcade-grid {
+    @apply bg-grid-pattern;
+    background-size: 60px 60px;
+  }
+
+  /* Premium Card Style */
+  .arcade-card {
+    @apply relative bg-ready-black-light/50 rounded-2xl border border-white/[0.08] 
+           overflow-hidden;
+    transition: all 0.5s var(--ease-out-expo);
+  }
+
+  .arcade-card:hover {
+    @apply border-ready-orange/30;
+    transform: translateY(-4px);
+    box-shadow: 
+      0 20px 40px -15px rgba(242, 146, 29, 0.15),
+      0 0 0 1px rgba(242, 146, 29, 0.1);
+  }
+
+  .arcade-card::before {
+    @apply content-[''] absolute inset-0 
+           bg-gradient-to-br from-ready-orange/5 via-transparent to-ready-pink/5;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-out-expo);
+  }
+
+  .arcade-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Section Divider - More elegant */
+  .section-divider {
+    @apply w-full h-px mx-auto max-w-4xl;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(242, 146, 29, 0.2) 20%,
+      rgba(242, 146, 29, 0.4) 50%,
+      rgba(242, 146, 29, 0.2) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Scan Line Animation - Much slower and subtle */
+  .scan-line {
+    @apply absolute left-0 right-0 h-[1px] pointer-events-none;
+    background: linear-gradient(
+      90deg, 
+      transparent, 
+      rgba(242, 146, 29, 0.08), 
+      transparent
+    );
+    animation: scan-line 12s linear infinite;
+  }
+  
+  /* Premium hover link */
+  .link-hover {
+    @apply relative;
+  }
+  
+  .link-hover::after {
+    @apply content-[''] absolute left-0 bottom-0 w-0 h-[1px] bg-ready-orange;
+    transition: width 0.4s var(--ease-out-expo);
+  }
+  
+  .link-hover:hover::after {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-ready-orange to-ready-pink bg-clip-text text-transparent;
+  }
+
+  /* Glass Effect */
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+
+  /* Focus Ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ready-orange focus-visible:ring-offset-2 focus-visible:ring-offset-ready-black;
+  }
+}
+
+/* Custom Scrollbar for specific elements */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: theme('colors.ready.orange');
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.ready.pink');
+}
+
+/* ================================================
+   GLITCH TEXT ANIMATION - ARCADE STYLE
+   Colores: Orange #F2921D y Pink #B2174B
+   ================================================ */
+
+/* Animación principal del texto glitch */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Capa con offset NARANJA (izquierda) */
+.glitch-text::before {
+  color: #F2921D;
+  animation: glitch-shift-orange 3s infinite ease-in-out;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translate(-3px, 0);
+  opacity: 0.8;
+  text-shadow: 0 0 10px rgba(242, 146, 29, 0.8);
+}
+
+/* Capa con offset ROSA (derecha) */
+.glitch-text::after {
+  color: #B2174B;
+  animation: glitch-shift-pink 3s infinite ease-in-out;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  transform: translate(3px, 0);
+  opacity: 0.8;
+  text-shadow: 0 0 10px rgba(178, 23, 75, 0.8);
+}
+
+/* Animación de shift naranja */
+@keyframes glitch-shift-orange {
+  0%, 100% {
+    transform: translate(-3px, 0);
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  }
+  20% {
+    transform: translate(3px, -2px);
+    clip-path: polygon(0 15%, 100% 15%, 100% 55%, 0 55%);
+  }
+  40% {
+    transform: translate(-2px, 2px);
+    clip-path: polygon(0 35%, 100% 35%, 100% 75%, 0 75%);
+  }
+  60% {
+    transform: translate(2px, -1px);
+    clip-path: polygon(0 5%, 100% 5%, 100% 35%, 0 35%);
+  }
+  80% {
+    transform: translate(-3px, 1px);
+    clip-path: polygon(0 60%, 100% 60%, 100% 90%, 0 90%);
+  }
+}
+
+/* Animación de shift rosa */
+@keyframes glitch-shift-pink {
+  0%, 100% {
+    transform: translate(3px, 0);
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  }
+  20% {
+    transform: translate(-3px, 1px);
+    clip-path: polygon(0 45%, 100% 45%, 100% 85%, 0 85%);
+  }
+  40% {
+    transform: translate(2px, -2px);
+    clip-path: polygon(0 25%, 100% 25%, 100% 65%, 0 65%);
+  }
+  60% {
+    transform: translate(-2px, 2px);
+    clip-path: polygon(0 65%, 100% 65%, 100% 95%, 0 95%);
+  }
+  80% {
+    transform: translate(3px, -1px);
+    clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%);
+  }
+}
+
+/* Efecto de parpadeo glitch */
+@keyframes glitch-blink {
+  0%, 100% { opacity: 1; }
+  8% { opacity: 0.85; }
+  10% { opacity: 1; }
+  25% { opacity: 1; }
+  27% { opacity: 0.9; }
+  29% { opacity: 1; }
+  50% { opacity: 1; }
+  52% { opacity: 0.8; }
+  54% { opacity: 1; }
+  75% { opacity: 1; }
+  77% { opacity: 0.85; }
+  79% { opacity: 1; }
+}
+
+/* Animación de blink para cursor arcade */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
