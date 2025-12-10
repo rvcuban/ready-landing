@@ -1,6 +1,7 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, useCallback } from "react"
+import { createPortal } from "react-dom"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { 
@@ -168,7 +169,7 @@ function useCounter(end: number, duration: number = 2000, start: boolean = false
   return count
 }
 
-// Video Modal Component
+// Video Modal Component - Using Portal to render outside normal DOM flow
 function VideoModal({ 
   isOpen, 
   onClose, 
@@ -181,73 +182,100 @@ function VideoModal({
   title: string
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [mounted, setMounted] = useState(false)
 
-  // Simple close - just close the modal
-  const handleClose = () => {
+  // Wait for client mount
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
+
+  // Stable close handler
+  const handleClose = useCallback(() => {
     if (videoRef.current) {
       videoRef.current.pause()
       videoRef.current.currentTime = 0
     }
     document.body.style.overflow = ""
+    document.body.style.position = ""
+    document.body.style.top = ""
+    document.body.style.width = ""
     onClose()
-  }
+  }, [onClose])
 
-  // Handle body scroll lock
+  // Lock body scroll when open
   useEffect(() => {
     if (isOpen) {
+      // Store scroll position and lock
+      const scrollY = window.scrollY
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = "100%"
       document.body.style.overflow = "hidden"
     } else {
+      // Restore scroll position
+      const scrollY = document.body.style.top
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
       document.body.style.overflow = ""
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1)
+      }
     }
+    
     return () => {
+      const scrollY = document.body.style.top
+      document.body.style.position = ""
+      document.body.style.top = ""
+      document.body.style.width = ""
       document.body.style.overflow = ""
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1)
+      }
     }
   }, [isOpen])
 
   // Handle escape key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleClose()
+      if (e.key === "Escape" && isOpen) {
+        handleClose()
+      }
     }
-    if (isOpen) {
-      document.addEventListener("keydown", handleEsc)
-    }
-    return () => {
-      document.removeEventListener("keydown", handleEsc)
-    }
-  }, [isOpen])
+    window.addEventListener("keydown", handleEsc)
+    return () => window.removeEventListener("keydown", handleEsc)
+  }, [isOpen, handleClose])
 
-  // Reset video when opening
-  useEffect(() => {
-    if (isOpen && videoRef.current) {
-      videoRef.current.currentTime = 0
-    }
-  }, [isOpen])
+  // Don't render on server or if not open
+  if (!mounted || !isOpen) return null
 
-  if (!isOpen) return null
-
-  return (
+  // Render using Portal to document.body
+  return createPortal(
     <div 
-      className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center"
+      className="fixed inset-0 bg-black flex items-center justify-center"
+      style={{ zIndex: 99999 }}
       onClick={handleClose}
     >
-      {/* Close Button - Always visible and on top */}
+      {/* Close Button */}
       <button
-        onClick={handleClose}
-        className="absolute top-4 right-4 z-[10000] w-14 h-14 rounded-full 
+        onClick={(e) => {
+          e.stopPropagation()
+          handleClose()
+        }}
+        className="absolute top-4 right-4 w-14 h-14 rounded-full 
                   bg-ready-orange text-black
                   flex items-center justify-center
-                  shadow-lg active:scale-95
-                  transition-transform duration-150"
+                  shadow-lg active:scale-95 touch-manipulation"
+        style={{ zIndex: 100000 }}
         aria-label="Cerrar video"
       >
         <X className="w-8 h-8" strokeWidth={3} />
       </button>
 
-      {/* Video Container - Vertical format */}
+      {/* Video Container */}
       <div 
-        className="relative w-full h-full max-w-[400px] max-h-[90vh] mx-auto
-                   flex items-center justify-center p-4"
+        className="relative w-full h-full flex items-center justify-center p-4"
         onClick={(e) => e.stopPropagation()}
       >
         <video
@@ -256,11 +284,17 @@ function VideoModal({
           controls
           playsInline
           autoPlay
-          className="w-full h-auto max-h-full rounded-lg object-contain"
-          style={{ maxHeight: 'calc(100vh - 100px)' }}
+          muted={false}
+          className="max-w-full max-h-full rounded-lg"
+          style={{ 
+            maxWidth: "min(100%, 400px)",
+            maxHeight: "calc(100vh - 120px)",
+            objectFit: "contain"
+          }}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
 
