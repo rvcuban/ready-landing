@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import { Volume2, VolumeX } from "lucide-react"
 
 // 🎭 CONFIGURACIÓN DE LA BROMA
 // Cambia esta fecha para desbloquear la web
@@ -9,6 +10,12 @@ const UNLOCK_DATE = new Date("2025-12-28T00:00:00")
 
 // ¿Activar la broma? Pon false para desactivarla
 const PRANK_ENABLED = true
+
+// GIF para la broma - Ichi Ni San Bang (Tenor Post ID)
+const TENOR_POST_ID = "2001701211027057759"
+
+// ID del video de YouTube (extraído de tu URL)
+const YOUTUBE_VIDEO_ID = "ORKhmaquTgU"
 
 interface TimeLeft {
   days: number
@@ -75,6 +82,9 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft())
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+  const [showGif, setShowGif] = useState(true)
+  const playerRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
     setMounted(true)
@@ -119,7 +129,37 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
 
   // Mostrar la pantalla de bloqueo con contador
   return (
-    <div className="min-h-screen bg-ready-black flex flex-col items-center justify-center p-6 overflow-hidden">
+    <div className="fixed inset-0 bg-ready-black flex flex-col items-center justify-center p-6 overflow-hidden z-[9999]">
+      {/* YouTube Audio Player (hidden) - Empieza en segundo 19 */}
+      <iframe
+        ref={playerRef}
+        className="hidden"
+        width="0"
+        height="0"
+        src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&start=19&playlist=${YOUTUBE_VIDEO_ID}${isMuted ? '&mute=1' : '&mute=0'}`}
+        allow="autoplay"
+      />
+
+      {/* Sound Toggle Button */}
+      <motion.button
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        onClick={() => setIsMuted(!isMuted)}
+        className="fixed top-6 right-6 z-50 w-12 h-12 rounded-full
+                   bg-ready-black-light border border-ready-orange/50
+                   flex items-center justify-center
+                   hover:border-ready-orange hover:bg-ready-orange/20
+                   transition-all duration-300 group"
+        title={isMuted ? "Activar sonido" : "Silenciar"}
+      >
+        {isMuted ? (
+          <VolumeX className="w-5 h-5 text-ready-cream/60 group-hover:text-ready-orange" />
+        ) : (
+          <Volume2 className="w-5 h-5 text-ready-orange animate-pulse" />
+        )}
+      </motion.button>
+
       {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 -left-40 w-[500px] h-[500px] bg-ready-orange/10 rounded-full blur-[150px]" />
@@ -141,12 +181,92 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
         transition={{ duration: 0.8 }}
         className="relative z-10 text-center max-w-4xl mx-auto"
       >
+        {/* 3 GIFs de Tenor - El mismo repetido 3 veces */}
+        {showGif && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, type: "spring" }}
+            className="mb-8"
+          >
+            <div className="flex items-center justify-center gap-4 sm:gap-6">
+              {/* GIF Izquierdo */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, type: "spring" }}
+                className="hidden sm:block"
+              >
+                <div className="relative rounded-2xl overflow-hidden border-2 border-ready-orange/30
+                               shadow-[0_0_30px_rgba(242,146,29,0.2)] opacity-70 scale-90">
+                  <div className="w-36 sm:w-40 aspect-[9/16] bg-ready-black-light">
+                    <iframe 
+                      src={`https://tenor.com/embed/${TENOR_POST_ID}`}
+                      width="100%" 
+                      height="100%" 
+                      frameBorder="0"
+                      className="pointer-events-none"
+                      style={{ border: 'none' }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* GIF Central (Principal) */}
+              <div className="relative">
+                <div className="relative rounded-2xl overflow-hidden border-2 border-ready-orange/50
+                               shadow-[0_0_40px_rgba(242,146,29,0.3)]">
+                  {/* Corner decorations */}
+                  <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-ready-orange z-20" />
+                  <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-ready-orange z-20" />
+                  <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-ready-orange z-20" />
+                  <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-ready-orange z-20" />
+                  
+                  <div className="w-48 sm:w-56 aspect-[9/16] bg-ready-black-light">
+                    <iframe 
+                      src={`https://tenor.com/embed/${TENOR_POST_ID}`}
+                      width="100%" 
+                      height="100%" 
+                      frameBorder="0"
+                      allowFullScreen
+                      className="pointer-events-none"
+                      style={{ border: 'none' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* GIF Derecho */}
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, type: "spring" }}
+                className="hidden sm:block"
+              >
+                <div className="relative rounded-2xl overflow-hidden border-2 border-ready-orange/30
+                               shadow-[0_0_30px_rgba(242,146,29,0.2)] opacity-70 scale-90">
+                  <div className="w-36 sm:w-40 aspect-[9/16] bg-ready-black-light">
+                    <iframe 
+                      src={`https://tenor.com/embed/${TENOR_POST_ID}`}
+                      width="100%" 
+                      height="100%" 
+                      frameBorder="0"
+                      className="pointer-events-none"
+                      style={{ border: 'none' }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Logo */}
         <motion.div
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          className="mb-8"
+          className="mb-6"
         >
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-bold text-ready-cream">
             READY<span className="text-ready-orange">?</span>
@@ -173,9 +293,9 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
           transition={{ delay: 0.6 }}
           className="text-ready-cream/60 text-lg sm:text-xl md:text-2xl mb-12 max-w-2xl mx-auto"
         >
-          Estamos preparando algo <span className="text-ready-orange font-semibold">épico</span>. 
+          Por no tenerme listas las cosas <span className="text-ready-orange font-semibold">Hagamos un dia de los inocentes inverso</span>. 
           <br />
-          La partida comienza en...
+          Esto es una shit hasta que sea el dia de los inocentes disfruta de tu web mariquita...
         </motion.p>
 
         {/* Countdown */}
@@ -199,7 +319,7 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
           className="space-y-4"
         >
           <p className="text-ready-cream/40 text-sm">
-            🎮 Insertando monedas... Por favor espera
+            🎮 Esperemos que tus clientes no vean esto... 
           </p>
           
           {/* Fake Progress Bar */}
@@ -213,7 +333,7 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
               />
             </div>
             <p className="text-ready-cream/30 text-xs mt-2">
-              Cargando assets... 33%
+              No pienses que la barra va avanzar o algo asi ni que me sobrara el tiempo... 33%
             </p>
           </div>
         </motion.div>
@@ -225,30 +345,10 @@ export function PrankCountdown({ children }: { children: React.ReactNode }) {
           transition={{ delay: 2 }}
           className="mt-16 text-ready-cream/20 text-xs"
         >
-          🎭 ¿Inocente? Puede que sí, puede que no...
+          🎭 Me dio hambre quiero una hamburguesa ...
         </motion.p>
       </motion.div>
 
-      {/* Floating Particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-ready-orange/30 rounded-full"
-          initial={{
-            x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-            y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-          }}
-          animate={{
-            y: [null, -20, 20],
-            opacity: [0.3, 0.8, 0.3],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Infinity,
-            delay: i * 0.5,
-          }}
-        />
-      ))}
     </div>
   )
 }
