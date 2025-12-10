@@ -11,6 +11,7 @@ import {
   Contact, 
   Footer 
 } from "@/components/sections"
+import { PrankCountdown } from "@/components/prank-countdown"
 
 // Konami Code Easter Egg
 const KONAMI_CODE = [
@@ -79,7 +80,7 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <PrankCountdown>
       {/* Konami Easter Egg Overlay */}
       {konamiActivated && (
         <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center">
@@ -125,6 +126,6 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
-    </>
+    </PrankCountdown>
   )
 }
