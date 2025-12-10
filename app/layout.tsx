@@ -77,7 +77,7 @@ export const metadata: Metadata = {
       "y estrategia digital. ¿Tu marca hace ruido o solo parpadea?",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/images/og_image.png",
         width: 1200,
         height: 630,
         alt: "READY? Estudio Creativo - Agencia de Marketing Digital en Cáceres",
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
     description: 
       "Agencia de marketing digital en Cáceres. Gestión de redes sociales, creación de contenido " +
       "y estrategia digital. ¿Tu marca hace ruido o solo parpadea?",
-    images: ["/og-image.jpg"],
+    images: ["/images/og_image.png"],
     creator: "@pabswhat",
   },
   robots: {
@@ -160,7 +160,7 @@ const jsonLd = {
         "https://www.instagram.com/pabswhat",
         "https://www.tiktok.com/@pabswhat"
       ],
-      "image": "https://estudioready.es/og-image.jpg",
+      "image": "https://estudioready.es/images/og_image.png",
       "logo": "https://estudioready.es/logo.png"
     },
     {
