@@ -182,6 +182,7 @@ function VideoModal({
   title: string
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const scrollPositionRef = useRef(0)
   const [mounted, setMounted] = useState(false)
 
   // Wait for client mount
@@ -190,51 +191,55 @@ function VideoModal({
     return () => setMounted(false)
   }, [])
 
-  // Stable close handler
+  // Lock body scroll when open - save position BEFORE locking
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      scrollPositionRef.current = window.scrollY
+      // Lock body
+      document.body.style.overflow = "hidden"
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${scrollPositionRef.current}px`
+      document.body.style.left = "0"
+      document.body.style.right = "0"
+    }
+  }, [isOpen])
+
+  // Stable close handler - restore scroll position
   const handleClose = useCallback(() => {
+    // Pause and reset video
     if (videoRef.current) {
       videoRef.current.pause()
       videoRef.current.currentTime = 0
     }
+    
+    // Get saved scroll position BEFORE clearing styles
+    const savedScrollY = scrollPositionRef.current
+    
+    // Clear body styles
     document.body.style.overflow = ""
     document.body.style.position = ""
     document.body.style.top = ""
-    document.body.style.width = ""
+    document.body.style.left = ""
+    document.body.style.right = ""
+    
+    // Restore scroll position
+    window.scrollTo(0, savedScrollY)
+    
+    // Close modal
     onClose()
   }, [onClose])
 
-  // Lock body scroll when open
+  // Cleanup on unmount
   useEffect(() => {
-    if (isOpen) {
-      // Store scroll position and lock
-      const scrollY = window.scrollY
-      document.body.style.position = "fixed"
-      document.body.style.top = `-${scrollY}px`
-      document.body.style.width = "100%"
-      document.body.style.overflow = "hidden"
-    } else {
-      // Restore scroll position
-      const scrollY = document.body.style.top
-      document.body.style.position = ""
-      document.body.style.top = ""
-      document.body.style.width = ""
-      document.body.style.overflow = ""
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1)
-      }
-    }
-    
     return () => {
-      const scrollY = document.body.style.top
+      document.body.style.overflow = ""
       document.body.style.position = ""
       document.body.style.top = ""
-      document.body.style.width = ""
-      document.body.style.overflow = ""
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || "0") * -1)
-      }
+      document.body.style.left = ""
+      document.body.style.right = ""
     }
-  }, [isOpen])
+  }, [])
 
   // Handle escape key
   useEffect(() => {
