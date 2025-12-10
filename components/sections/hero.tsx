@@ -83,7 +83,7 @@ export function Hero() {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-28"
     >
       {/* ═══════════════════════════════════════════════════
           ABSTRACT BACKGROUND - Maximalista style

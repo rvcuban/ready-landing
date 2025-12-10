@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Space_Grotesk, Inter, Press_Start_2P, Bebas_Neue } from "next/font/google"
 import "./globals.css"
+import { CookieBanner } from "@/components/cookie-banner"
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -99,6 +100,9 @@ export default function RootLayout({
         
         {/* Main Content */}
         {children}
+
+        {/* Cookie Consent Banner */}
+        <CookieBanner />
       </body>
     </html>
   )

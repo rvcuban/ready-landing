@@ -71,9 +71,9 @@ const footerLinks = {
     { label: "Casos de éxito", href: "#scores" },
   ],
   legal: [
-    { label: "Política de privacidad", href: "#" },
-    { label: "Aviso legal", href: "#" },
-    { label: "Cookies", href: "#" },
+    { label: "Política de privacidad", href: "/politica-privacidad" },
+    { label: "Aviso legal", href: "/aviso-legal" },
+    { label: "Cookies", href: "/cookies" },
   ],
 }
 

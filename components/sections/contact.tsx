@@ -8,7 +8,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { 
   Loader2,
   CheckCircle,
-  Gamepad2
+  Gamepad2,
+  Mail,
+  Phone
 } from "lucide-react"
 
 // Premium Easing
@@ -257,6 +259,46 @@ export function Contact() {
                 className="w-3 h-8 bg-ready-orange animate-blink"
                 style={{ boxShadow: '0 0 10px rgba(242, 146, 29, 0.6)' }}
               />
+            </motion.div>
+
+            {/* Contacto directo */}
+            <motion.div 
+              variants={itemVariants}
+              className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+            >
+              <a 
+                href="mailto:hola@estudioready.es"
+                className="group flex items-center gap-3 px-5 py-3 rounded-xl
+                         bg-white/5 border border-white/10 
+                         hover:border-ready-orange/40 hover:bg-ready-orange/5
+                         transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-lg bg-ready-orange/10 flex items-center justify-center
+                               group-hover:bg-ready-orange/20 transition-colors">
+                  <Mail className="w-5 h-5 text-ready-orange" />
+                </div>
+                <div className="text-left">
+                  <p className="text-ready-cream/50 text-xs uppercase tracking-wide">Email</p>
+                  <p className="text-ready-cream font-medium">hola@estudioready.es</p>
+                </div>
+              </a>
+
+              <a 
+                href="tel:+34648043990"
+                className="group flex items-center gap-3 px-5 py-3 rounded-xl
+                         bg-white/5 border border-white/10 
+                         hover:border-ready-pink/40 hover:bg-ready-pink/5
+                         transition-all duration-300"
+              >
+                <div className="w-10 h-10 rounded-lg bg-ready-pink/10 flex items-center justify-center
+                               group-hover:bg-ready-pink/20 transition-colors">
+                  <Phone className="w-5 h-5 text-ready-pink" />
+                </div>
+                <div className="text-left">
+                  <p className="text-ready-cream/50 text-xs uppercase tracking-wide">Teléfono</p>
+                  <p className="text-ready-cream font-medium">648 043 990</p>
+                </div>
+              </a>
             </motion.div>
           </motion.div>
 
