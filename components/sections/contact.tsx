@@ -159,7 +159,7 @@ export function Contact() {
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 max-w-6xl mx-auto items-center">
           
           {/* ═══════════════════════════════════════════════════
-              LEFT: TEXTO DRAMÁTICO CON GLITCH REAL
+              LEFT: TEXTO DRAMÁTICO - MAXIMALISTA
           ═══════════════════════════════════════════════════ */}
           <motion.div
             variants={containerVariants}
@@ -167,23 +167,34 @@ export function Contact() {
             animate={isInView ? "visible" : "hidden"}
             className="text-center lg:text-left"
           >
-            {/* GAME OVER? con GLITCH REAL */}
+            {/* GAME OVER? - Condensed giant */}
             <motion.div variants={itemVariants} className="mb-4">
               <h2 
-                className="glitch-text font-display text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-ready-orange leading-none"
-                data-text="GAME OVER?"
+                className="font-display uppercase leading-[0.8] tracking-tight text-ready-orange"
                 style={{
-                  textShadow: '0 0 40px rgba(242, 146, 29, 0.4), 0 0 80px rgba(242, 146, 29, 0.2)'
+                  fontSize: 'clamp(3rem, 12vw, 10rem)',
+                  transform: 'scaleY(1.1)',
+                  textShadow: '0 0 60px rgba(242, 146, 29, 0.3)'
                 }}
               >
-                GAME OVER?
+                GAME
+              </h2>
+              <h2 
+                className="font-display uppercase leading-[0.8] tracking-tight text-ready-orange"
+                style={{
+                  fontSize: 'clamp(3rem, 12vw, 10rem)',
+                  transform: 'scaleY(1.1)',
+                  textShadow: '0 0 60px rgba(242, 146, 29, 0.3)'
+                }}
+              >
+                OVER?
               </h2>
             </motion.div>
 
             {/* ...O CONTINUE? */}
             <motion.h3 
               variants={itemVariants}
-              className="font-display text-md sm:text-md md:text-xl font-bold text-ready-cream mb-10"
+              className="font-display text-lg sm:text-xl md:text-2xl uppercase tracking-wide text-ready-cream/60 mb-10"
             >
               ...O{" "}
               <span 

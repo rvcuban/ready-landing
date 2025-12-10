@@ -54,11 +54,17 @@ const contactInfo = [
 
 const footerLinks = {
   servicios: [
-    { label: "Gancho", href: "#servicios" },
-    { label: "Pinball", href: "#servicios" },
-    { label: "Turbo", href: "#servicios" },
-    { label: "Puzzle", href: "#servicios" },
-    { label: "Game Master", href: "#servicios" },
+    { label: "Acompañamiento", href: "#servicios" },
+    { label: "Contenido", href: "#servicios" },
+    { label: "Gestión RRSS", href: "#servicios" },
+    { label: "Gestión PRO", href: "#servicios" },
+    { label: "Auditoría", href: "#servicios" },
+    { label: "Marketing", href: "#servicios" },
+  ],
+  packs: [
+    { label: "Pack Emprendedor", href: "#pricing" },
+    { label: "Pack Empresa", href: "#pricing" },
+    { label: "BoosterPack", href: "#pricing" },
   ],
   empresa: [
     { label: "Sobre nosotros", href: "#salon" },
@@ -78,7 +84,7 @@ export function Footer() {
     <footer className="relative bg-ready-black border-t border-white/5">
       {/* Main Footer */}
       <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10">
           {/* Brand Column */}
           <div className="col-span-2 lg:col-span-2">
             <motion.a 
@@ -146,6 +152,28 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 sm:space-y-3">
               {footerLinks.servicios.map((link, index) => (
+                <li key={index}>
+                  <a 
+                    href={link.href}
+                    className="
+                      text-ready-cream/50 hover:text-ready-orange 
+                      transition-colors duration-500 text-xs sm:text-sm
+                    "
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Packs Links */}
+          <div>
+            <h4 className="font-display font-bold text-ready-cream mb-3 sm:mb-5 text-sm sm:text-base">
+              Packs
+            </h4>
+            <ul className="space-y-2 sm:space-y-3">
+              {footerLinks.packs.map((link, index) => (
                 <li key={index}>
                   <a 
                     href={link.href}

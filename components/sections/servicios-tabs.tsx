@@ -5,240 +5,64 @@ import { motion, AnimatePresence, useInView } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
 import { 
   Gamepad2, 
-  Zap, 
   ChevronRight, 
-  Magnet, 
-  Target, 
-  Rocket, 
-  Puzzle, 
-  Crown 
+  Compass,
+  Video,
+  MessageSquare,
+  Rocket,
+  Search,
+  Megaphone,
+  Euro
 } from "lucide-react"
 
 // ============================================
-// SVG Arcade Machine Components (Compactas)
+// SVG Arcade Machine Components - Temáticas por servicio
 // ============================================
 
-const GanchoMachine = () => (
-  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
-    <rect x="25" y="55" width="150" height="210" rx="10" 
-          fill="url(#cabinetGradient)" stroke="#F2921D" strokeWidth="3"/>
-    <rect x="30" y="60" width="140" height="200" rx="8" fill="#0a0b10"/>
-    <rect x="40" y="75" width="120" height="90" rx="6" fill="#1a1b22"/>
-    <rect x="48" y="83" width="104" height="74" rx="4" fill="#0E0F14"/>
-    <rect x="48" y="83" width="104" height="74" rx="4" 
-          fill="url(#screenGlowOrange)" opacity="0.6"/>
-    <g transform="translate(100, 115)">
-      <path d="M20 -15 L20 15 C20 32 10 42 0 42 C-10 42 -20 32 -20 15 L-20 -15" 
-            fill="none" stroke="#F2921D" strokeWidth="8" strokeLinecap="round">
-        <animate attributeName="stroke-opacity" 
-                 values="1;0.6;1" dur="1.5s" repeatCount="indefinite"/>
-      </path>
-      <rect x="-28" y="-25" width="16" height="15" rx="3" fill="#F2921D"/>
-      <rect x="12" y="-25" width="16" height="15" rx="3" fill="#F2921D"/>
-      <circle cx="0" cy="55" r="3" fill="#FFF1E6">
-        <animate attributeName="cy" 
-                 values="70;45;70" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" 
-                 values="0;1;0" dur="2s" repeatCount="indefinite"/>
-      </circle>
-    </g>
-    <rect x="40" y="175" width="120" height="75" rx="6" fill="#1a1b22"/>
-    <ellipse cx="70" cy="210" rx="18" ry="12" fill="#0E0F14"/>
-    <circle cx="70" cy="185" r="10" fill="#F2921D">
-      <animate attributeName="fill" 
-               values="#F2921D;#ffb54d;#F2921D" dur="3s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="115" cy="200" r="12" fill="#F2921D">
-      <animate attributeName="r" 
-               values="12;13;12" dur="0.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="145" cy="205" r="10" fill="#B2174B"/>
-    <rect x="35" y="15" width="130" height="38" rx="6" fill="#F2921D"/>
-    <rect x="40" y="20" width="120" height="28" rx="4" fill="#0E0F14"/>
-    <text x="100" y="40" textAnchor="middle" fill="#F2921D" fontSize="16" 
-          fontWeight="bold" fontFamily="monospace">GANCHO</text>
-    <circle cx="42" cy="12" r="4" fill="#FFF1E6">
-      <animate attributeName="opacity" 
-               values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="100" cy="12" r="4" fill="#FFF1E6">
-      <animate attributeName="opacity" 
-               values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.15s"/>
-    </circle>
-    <circle cx="158" cy="12" r="4" fill="#FFF1E6">
-      <animate attributeName="opacity" 
-               values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.3s"/>
-    </circle>
-    <defs>
-      <linearGradient id="cabinetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#2a2b32"/>
-        <stop offset="100%" stopColor="#1a1b22"/>
-      </linearGradient>
-      <linearGradient id="screenGlowOrange" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#F2921D" stopOpacity="0.4"/>
-        <stop offset="50%" stopColor="#F2921D" stopOpacity="0.1"/>
-        <stop offset="100%" stopColor="#0E0F14" stopOpacity="0"/>
-      </linearGradient>
-    </defs>
-  </svg>
-)
-
-const PinballMachine = () => (
-  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
-    <path d="M25 75 L175 75 L165 265 L35 265 Z" 
-          fill="url(#cabinetPink)" stroke="#B2174B" strokeWidth="3"/>
-    <path d="M32 82 L168 82 L159 258 L41 258 Z" fill="#0a0b10"/>
-    <path d="M42 95 L158 95 L150 245 L50 245 Z" fill="#0E0F14"/>
-    <path d="M42 95 L158 95 L150 245 L50 245 Z" 
-          fill="url(#playfieldGlow)" opacity="0.3"/>
-    <g>
-      <circle cx="75" cy="130" r="18" fill="#B2174B">
-        <animate attributeName="r" 
-                 values="18;20;18" dur="0.4s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="75" cy="130" r="12" fill="#ff3366"/>
-      <text x="75" y="134" textAnchor="middle" 
-            fill="#FFF1E6" fontSize="10" fontWeight="bold">100</text>
-    </g>
-    <g>
-      <circle cx="125" cy="125" r="18" fill="#F2921D">
-        <animate attributeName="r" 
-                 values="18;20;18" dur="0.4s" repeatCount="indefinite" begin="0.2s"/>
-      </circle>
-      <circle cx="125" cy="125" r="12" fill="#ffb54d"/>
-      <text x="125" y="129" textAnchor="middle" 
-            fill="#0E0F14" fontSize="10" fontWeight="bold">200</text>
-    </g>
-    <circle cx="130" cy="190" r="8" fill="url(#ballGradient)">
-      <animate attributeName="cx" 
-               values="130;70;100;80;130" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="cy" 
-               values="190;140;170;200;190" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <rect x="40" y="20" width="120" height="50" rx="6" 
-          fill="#1a1b22" stroke="#B2174B" strokeWidth="2"/>
-    <rect x="48" y="28" width="104" height="34" rx="4" fill="#0E0F14"/>
-    <text x="100" y="52" textAnchor="middle" fill="#B2174B" fontSize="20" 
-          fontWeight="bold" fontFamily="monospace">88888</text>
-    <rect x="50" y="2" width="100" height="18" rx="4" fill="#B2174B"/>
-    <text x="100" y="15" textAnchor="middle" 
-          fill="#FFF1E6" fontSize="10" fontWeight="bold">PINBALL</text>
-    <defs>
-      <linearGradient id="cabinetPink" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#2a2b32"/>
-        <stop offset="100%" stopColor="#1a1b22"/>
-      </linearGradient>
-      <linearGradient id="playfieldGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#B2174B" stopOpacity="0.3"/>
-        <stop offset="100%" stopColor="#0E0F14"/>
-      </linearGradient>
-      <radialGradient id="ballGradient">
-        <stop offset="0%" stopColor="#FFFFFF"/>
-        <stop offset="50%" stopColor="#E0E0E0"/>
-        <stop offset="100%" stopColor="#AAAAAA"/>
-      </radialGradient>
-    </defs>
-  </svg>
-)
-
-const TurboMachine = () => (
-  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
-    <rect x="20" y="45" width="160" height="220" rx="12" 
-          fill="url(#racingCabinet)" stroke="#06B6D4" strokeWidth="3"/>
-    <rect x="27" y="52" width="146" height="206" rx="10" fill="#0a0b10"/>
-    <rect x="35" y="65" width="130" height="95" rx="6" fill="#1a1b22"/>
-    <rect x="42" y="72" width="116" height="81" rx="4" fill="#0E0F14"/>
-    <rect x="42" y="72" width="116" height="81" rx="4" fill="url(#skyGradientCyan)"/>
-    <path d="M100 153 L42 153 L60 100 L140 100 L158 153 Z" fill="#333"/>
-    <line x1="100" y1="110" x2="100" y2="153" 
-          stroke="#FFF1E6" strokeWidth="2" strokeDasharray="8,8">
-      <animate attributeName="stroke-dashoffset" 
-               values="0;16" dur="0.3s" repeatCount="indefinite"/>
-    </line>
-    <g transform="translate(82, 125)">
-      <rect x="0" y="0" width="36" height="22" rx="4" fill="#F2921D">
-        <animate attributeName="y" 
-                 values="0;-2;0;2;0" dur="0.15s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="5" y="-8" width="26" height="12" rx="3" fill="#B2174B"/>
-      <path d="M-5 8 Q-12 11 -8 15" fill="#06B6D4" opacity="0.8">
-        <animate attributeName="opacity" 
-                 values="0.8;0.4;0.8" dur="0.1s" repeatCount="indefinite"/>
-      </path>
-    </g>
-    <g transform="translate(100, 200)">
-      <circle cx="0" cy="0" r="35" fill="none" stroke="#06B6D4" strokeWidth="8"/>
-      <circle cx="0" cy="0" r="12" fill="#1a1b22" stroke="#22D3EE" strokeWidth="2"/>
-      <circle cx="0" cy="-25" r="4" fill="#F2921D"/>
-    </g>
-    <rect x="30" y="10" width="140" height="32" rx="6" fill="#06B6D4"/>
-    <rect x="38" y="18" width="124" height="16" rx="4" fill="#0E0F14"/>
-    <text x="100" y="31" textAnchor="middle" 
-          fill="#06B6D4" fontSize="12" fontWeight="bold">TURBO</text>
-    <circle cx="42" cy="12" r="4" fill="#F2921D">
-      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="158" cy="12" r="4" fill="#B2174B">
-      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.2s"/>
-    </circle>
-    <defs>
-      <linearGradient id="racingCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#2a2b32"/>
-        <stop offset="100%" stopColor="#1a1b22"/>
-      </linearGradient>
-      <linearGradient id="skyGradientCyan" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#0e4a5c"/>
-        <stop offset="60%" stopColor="#0E0F14"/>
-        <stop offset="100%" stopColor="#333"/>
-      </linearGradient>
-    </defs>
-  </svg>
-)
-
-const PuzzleMachine = () => (
+// 01 - ACOMPAÑAMIENTO: Brújula/Compass Machine (Orange)
+const CompassMachine = () => (
   <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
     <rect x="25" y="50" width="150" height="215" rx="10" 
-          fill="url(#puzzleCabinet)" stroke="#A855F7" strokeWidth="3"/>
+          fill="url(#compassCabinet)" stroke="#F2921D" strokeWidth="3"/>
     <rect x="32" y="57" width="136" height="201" rx="8" fill="#0a0b10"/>
-    <rect x="40" y="70" width="120" height="105" rx="6" fill="#1a1b22"/>
-    <rect x="48" y="78" width="104" height="89" rx="4" fill="#0E0F14"/>
-    <g transform="translate(55, 85)">
-      <rect x="0" y="0" width="28" height="24" rx="3" fill="#A855F7">
-        <animate attributeName="opacity" 
-                 values="1;0.7;1" dur="3s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="32" y="0" width="28" height="24" rx="3" fill="#F2921D">
-        <animate attributeName="opacity" 
-                 values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="64" y="0" width="28" height="24" rx="3" fill="#06B6D4"/>
-      <rect x="0" y="28" width="28" height="24" rx="3" fill="#22C55E"/>
-      <rect x="32" y="28" width="28" height="24" rx="3" 
-            fill="#1a1b22" stroke="#FFF1E6" strokeWidth="1" strokeDasharray="4,2">
-        <animate attributeName="stroke-opacity" 
-                 values="1;0.3;1" dur="1s" repeatCount="indefinite"/>
-      </rect>
-      <rect x="64" y="28" width="28" height="24" rx="3" fill="#B2174B"/>
-      <rect x="0" y="56" width="28" height="24" rx="3" fill="#06B6D4"/>
-      <rect x="32" y="56" width="28" height="24" rx="3" fill="#A855F7"/>
-      <rect x="64" y="56" width="28" height="24" rx="3" fill="#F2921D"/>
+    <rect x="40" y="70" width="120" height="110" rx="6" fill="#1a1b22"/>
+    <rect x="48" y="78" width="104" height="94" rx="4" fill="#0E0F14"/>
+    {/* Compass */}
+    <g transform="translate(100, 125)">
+      <circle cx="0" cy="0" r="38" fill="none" stroke="#F2921D" strokeWidth="3" opacity="0.3"/>
+      <circle cx="0" cy="0" r="32" fill="none" stroke="#F2921D" strokeWidth="2"/>
+      <circle cx="0" cy="0" r="5" fill="#F2921D"/>
+      {/* Cardinal points */}
+      <text x="0" y="-22" textAnchor="middle" fill="#F2921D" fontSize="10" fontWeight="bold">N</text>
+      <text x="0" y="28" textAnchor="middle" fill="#FFF1E6" fontSize="8" opacity="0.5">S</text>
+      <text x="24" y="4" textAnchor="middle" fill="#FFF1E6" fontSize="8" opacity="0.5">E</text>
+      <text x="-24" y="4" textAnchor="middle" fill="#FFF1E6" fontSize="8" opacity="0.5">O</text>
+      {/* Needle */}
+      <g>
+        <animateTransform attributeName="transform" type="rotate" 
+            values="0;10;-5;0" dur="3s" repeatCount="indefinite"/>
+        <polygon points="0,-28 4,0 0,10 -4,0" fill="#F2921D"/>
+        <polygon points="0,28 4,0 0,-10 -4,0" fill="#FFF1E6" opacity="0.5"/>
+      </g>
     </g>
-    <rect x="45" y="185" width="110" height="65" rx="6" fill="#1a1b22"/>
-    <circle cx="80" cy="215" r="8" fill="#22C55E"/>
-    <circle cx="120" cy="205" r="10" fill="#F2921D"/>
-    <circle cx="140" cy="220" r="10" fill="#B2174B"/>
-    <rect x="35" y="12" width="130" height="35" rx="6" fill="#A855F7"/>
+    {/* Controls */}
+    <rect x="45" y="190" width="110" height="55" rx="6" fill="#1a1b22"/>
+    <circle cx="75" cy="215" r="12" fill="#F2921D">
+      <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="125" cy="215" r="12" fill="#0E0F14" stroke="#F2921D" strokeWidth="2"/>
+    {/* Header */}
+    <rect x="35" y="12" width="130" height="35" rx="6" fill="#F2921D"/>
     <rect x="42" y="19" width="116" height="21" rx="4" fill="#0E0F14"/>
-    <text x="100" y="35" textAnchor="middle" 
-          fill="#A855F7" fontSize="14" fontWeight="bold">PUZZLE</text>
-    <circle cx="50" cy="10" r="4" fill="#C084FC">
+    <text x="100" y="34" textAnchor="middle" fill="#F2921D" fontSize="11" fontWeight="bold">STRATEGY</text>
+    <circle cx="45" cy="10" r="4" fill="#FFF1E6">
       <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
     </circle>
-    <circle cx="150" cy="10" r="4" fill="#C084FC">
+    <circle cx="155" cy="10" r="4" fill="#FFF1E6">
       <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.25s"/>
     </circle>
     <defs>
-      <linearGradient id="puzzleCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="compassCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#2a2b32"/>
         <stop offset="100%" stopColor="#1a1b22"/>
       </linearGradient>
@@ -246,61 +70,342 @@ const PuzzleMachine = () => (
   </svg>
 )
 
-const GameMasterMachine = () => (
+// 02 - CONTENIDO: Video/Camera Machine (Pink)
+const VideoMachine = () => (
   <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
-    <path d="M20 55 L180 55 L170 260 L30 260 Z" 
-          fill="url(#masterCabinet)" stroke="#22C55E" strokeWidth="3"/>
-    <path d="M28 62 L172 62 L163 253 L37 253 Z" fill="#0a0b10"/>
-    <path d="M55 25 L75 45 L100 15 L125 45 L145 25 L145 55 L55 55 Z" fill="#F2921D"/>
-    <circle cx="100" cy="30" r="8" fill="#FFF1E6"/>
-    <circle cx="75" cy="38" r="5" fill="#B2174B"/>
-    <circle cx="125" cy="38" r="5" fill="#06B6D4"/>
-    <rect x="40" y="70" width="120" height="95" rx="6" fill="#1a1b22"/>
-    <rect x="48" y="78" width="104" height="79" rx="4" fill="#0E0F14"/>
-    <g transform="translate(100, 117)">
-      <circle cx="0" cy="0" r="12" fill="#22C55E">
-        <animate attributeName="r" 
-                 values="12;14;12" dur="2s" repeatCount="indefinite"/>
+    <rect x="25" y="50" width="150" height="215" rx="10" 
+          fill="url(#videoCabinet)" stroke="#B2174B" strokeWidth="3"/>
+    <rect x="32" y="57" width="136" height="201" rx="8" fill="#0a0b10"/>
+    <rect x="40" y="70" width="120" height="110" rx="6" fill="#1a1b22"/>
+    <rect x="48" y="78" width="104" height="94" rx="4" fill="#0E0F14"/>
+    {/* Camera/Film */}
+    <g transform="translate(100, 125)">
+      {/* Film reels */}
+      <circle cx="-20" cy="-20" r="18" fill="none" stroke="#B2174B" strokeWidth="3">
+        <animateTransform attributeName="transform" type="rotate" 
+            values="0 -20 -20;360 -20 -20" dur="4s" repeatCount="indefinite"/>
       </circle>
-      <text x="0" y="4" textAnchor="middle" 
-            fill="#0E0F14" fontSize="8" fontWeight="bold">★</text>
-      <circle cx="0" cy="0" r="20" fill="none" 
-              stroke="#22C55E" strokeWidth="1" opacity="0">
-        <animate attributeName="r" 
-                 values="15;35;15" dur="2s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" 
-                 values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
+      <circle cx="-20" cy="-20" r="6" fill="#B2174B"/>
+      <circle cx="20" cy="-20" r="18" fill="none" stroke="#B2174B" strokeWidth="3">
+        <animateTransform attributeName="transform" type="rotate" 
+            values="0 20 -20;360 20 -20" dur="4s" repeatCount="indefinite"/>
       </circle>
-      <circle cx="-35" cy="-20" r="8" fill="#F2921D"/>
-      <circle cx="35" cy="-20" r="8" fill="#B2174B"/>
-      <line x1="0" y1="-12" x2="-30" y2="-17" 
-            stroke="#4ADE80" strokeWidth="2"/>
-      <line x1="0" y1="-12" x2="30" y2="-17" 
-            stroke="#4ADE80" strokeWidth="2"/>
+      <circle cx="20" cy="-20" r="6" fill="#B2174B"/>
+      {/* Play button */}
+      <polygon points="-8,15 -8,35 12,25" fill="#B2174B">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+      </polygon>
+      {/* REC indicator */}
+      <circle cx="35" cy="-35" r="5" fill="#ff3366">
+        <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    <rect x="40" y="175" width="120" height="70" rx="6" fill="#1a1b22"/>
-    <rect x="48" y="183" width="48" height="30" rx="3" fill="#0E0F14"/>
-    <rect x="104" y="183" width="48" height="30" rx="3" fill="#0E0F14"/>
-    <circle cx="60" cy="198" r="6" fill="#F2921D"/>
-    <circle cx="80" cy="198" r="6" fill="#B2174B"/>
-    <circle cx="120" cy="198" r="6" fill="#06B6D4"/>
-    <circle cx="140" cy="198" r="6" fill="#A855F7"/>
-    <g transform="translate(100, 235)">
-      <rect x="-35" y="-8" width="70" height="20" rx="4" fill="#22C55E">
-        <animate attributeName="fill" 
-                 values="#22C55E;#4ADE80;#22C55E" dur="2s" repeatCount="indefinite"/>
-      </rect>
-      <text x="0" y="6" textAnchor="middle" 
-            fill="#0E0F14" fontSize="9" fontWeight="bold">EXECUTE</text>
-    </g>
-    <rect x="45" y="2" width="110" height="20" rx="4" 
-          fill="#0E0F14" stroke="#22C55E" strokeWidth="1"/>
-    <text x="100" y="16" textAnchor="middle" 
-          fill="#22C55E" fontSize="10" fontWeight="bold">GAME MASTER</text>
+    {/* Controls */}
+    <rect x="45" y="190" width="110" height="55" rx="6" fill="#1a1b22"/>
+    <rect x="60" y="205" width="30" height="25" rx="4" fill="#B2174B"/>
+    <rect x="110" y="205" width="30" height="25" rx="4" fill="#0E0F14" stroke="#B2174B" strokeWidth="2"/>
+    {/* Header */}
+    <rect x="35" y="12" width="130" height="35" rx="6" fill="#B2174B"/>
+    <rect x="42" y="19" width="116" height="21" rx="4" fill="#0E0F14"/>
+    <text x="100" y="34" textAnchor="middle" fill="#B2174B" fontSize="11" fontWeight="bold">CONTENT</text>
+    <circle cx="45" cy="10" r="4" fill="#ff3366">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="10" r="4" fill="#ff3366">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.25s"/>
+    </circle>
     <defs>
-      <linearGradient id="masterCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <linearGradient id="videoCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="#2a2b32"/>
         <stop offset="100%" stopColor="#1a1b22"/>
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+// 03 - GESTIÓN BÁSICA: Social/Chat Machine (Cyan)
+const SocialMachine = () => (
+  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
+    <rect x="25" y="50" width="150" height="215" rx="10" 
+          fill="url(#socialCabinet)" stroke="#06B6D4" strokeWidth="3"/>
+    <rect x="32" y="57" width="136" height="201" rx="8" fill="#0a0b10"/>
+    <rect x="40" y="70" width="120" height="110" rx="6" fill="#1a1b22"/>
+    <rect x="48" y="78" width="104" height="94" rx="4" fill="#0E0F14"/>
+    {/* Chat bubbles */}
+    <g transform="translate(100, 120)">
+      {/* Bubble 1 */}
+      <g>
+        <rect x="-40" y="-35" width="50" height="25" rx="12" fill="#06B6D4"/>
+        <polygon points="-35,-10 -30,-10 -38,-2" fill="#06B6D4"/>
+        <rect x="-35" y="-28" width="25" height="3" rx="1" fill="#0E0F14" opacity="0.3"/>
+        <rect x="-35" y="-22" width="35" height="3" rx="1" fill="#0E0F14" opacity="0.3"/>
+        <animate attributeName="opacity" values="0;1;1;1" dur="3s" repeatCount="indefinite"/>
+      </g>
+      {/* Bubble 2 */}
+      <g>
+        <rect x="0" y="0" width="45" height="25" rx="12" fill="#22D3EE"/>
+        <polygon points="40,25 35,25 42,33" fill="#22D3EE"/>
+        <rect x="5" y="7" width="30" height="3" rx="1" fill="#0E0F14" opacity="0.3"/>
+        <rect x="5" y="13" width="20" height="3" rx="1" fill="#0E0F14" opacity="0.3"/>
+        <animate attributeName="opacity" values="0;0;1;1" dur="3s" repeatCount="indefinite"/>
+      </g>
+      {/* Typing indicator */}
+      <g transform="translate(-30, 35)">
+        <circle cx="0" cy="0" r="3" fill="#06B6D4">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="0.6s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="10" cy="0" r="3" fill="#06B6D4">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="0.6s" repeatCount="indefinite" begin="0.2s"/>
+        </circle>
+        <circle cx="20" cy="0" r="3" fill="#06B6D4">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="0.6s" repeatCount="indefinite" begin="0.4s"/>
+        </circle>
+      </g>
+    </g>
+    {/* Controls */}
+    <rect x="45" y="190" width="110" height="55" rx="6" fill="#1a1b22"/>
+    <circle cx="75" cy="215" r="12" fill="#06B6D4"/>
+    <circle cx="125" cy="215" r="12" fill="#0E0F14" stroke="#06B6D4" strokeWidth="2"/>
+    {/* Header */}
+    <rect x="35" y="12" width="130" height="35" rx="6" fill="#06B6D4"/>
+    <rect x="42" y="19" width="116" height="21" rx="4" fill="#0E0F14"/>
+    <text x="100" y="34" textAnchor="middle" fill="#06B6D4" fontSize="11" fontWeight="bold">SOCIAL</text>
+    <circle cx="45" cy="10" r="4" fill="#22D3EE">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="10" r="4" fill="#22D3EE">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.25s"/>
+    </circle>
+    <defs>
+      <linearGradient id="socialCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2a2b32"/>
+        <stop offset="100%" stopColor="#1a1b22"/>
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+// 04 - GESTIÓN PRO: Rocket/Funnel Machine (Purple)
+const RocketMachine = () => (
+  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
+    <rect x="25" y="50" width="150" height="215" rx="10" 
+          fill="url(#rocketCabinet)" stroke="#A855F7" strokeWidth="3"/>
+    <rect x="32" y="57" width="136" height="201" rx="8" fill="#0a0b10"/>
+    <rect x="40" y="70" width="120" height="110" rx="6" fill="#1a1b22"/>
+    <rect x="48" y="78" width="104" height="94" rx="4" fill="#0E0F14"/>
+    {/* Rocket */}
+    <g transform="translate(100, 115)">
+      <g>
+        <animateTransform attributeName="transform" type="translate" 
+            values="0,5;0,-5;0,5" dur="2s" repeatCount="indefinite"/>
+        {/* Body */}
+        <ellipse cx="0" cy="0" rx="15" ry="30" fill="#A855F7"/>
+        {/* Nose */}
+        <ellipse cx="0" cy="-30" rx="10" ry="15" fill="#C084FC"/>
+        {/* Window */}
+        <circle cx="0" cy="-10" r="8" fill="#0E0F14"/>
+        <circle cx="0" cy="-10" r="5" fill="#22D3EE" opacity="0.8"/>
+        {/* Fins */}
+        <polygon points="-15,15 -25,35 -10,25" fill="#A855F7"/>
+        <polygon points="15,15 25,35 10,25" fill="#A855F7"/>
+        {/* Flames */}
+        <ellipse cx="0" cy="38" rx="8" ry="12" fill="#F2921D">
+          <animate attributeName="ry" values="12;18;12" dur="0.2s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="0" cy="38" rx="4" ry="8" fill="#FFF1E6">
+          <animate attributeName="ry" values="8;12;8" dur="0.15s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      {/* Stars */}
+      <circle cx="-35" cy="-25" r="2" fill="#FFF1E6">
+        <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="30" cy="10" r="1.5" fill="#FFF1E6">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+      <circle cx="-25" cy="20" r="1" fill="#FFF1E6">
+        <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite" begin="0.3s"/>
+      </circle>
+    </g>
+    {/* Controls */}
+    <rect x="45" y="190" width="110" height="55" rx="6" fill="#1a1b22"/>
+    <circle cx="75" cy="215" r="12" fill="#A855F7"/>
+    <circle cx="125" cy="215" r="12" fill="#0E0F14" stroke="#A855F7" strokeWidth="2"/>
+    {/* Header */}
+    <rect x="35" y="12" width="130" height="35" rx="6" fill="#A855F7"/>
+    <rect x="42" y="19" width="116" height="21" rx="4" fill="#0E0F14"/>
+    <text x="100" y="34" textAnchor="middle" fill="#A855F7" fontSize="11" fontWeight="bold">BOOST PRO</text>
+    <circle cx="45" cy="10" r="4" fill="#C084FC">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="10" r="4" fill="#C084FC">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.25s"/>
+    </circle>
+    <defs>
+      <linearGradient id="rocketCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2a2b32"/>
+        <stop offset="100%" stopColor="#1a1b22"/>
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+// 05 - AUDITORÍA: Search/Magnifying Glass Machine (Green)
+const SearchMachine = () => (
+  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
+    <rect x="25" y="50" width="150" height="215" rx="10" 
+          fill="url(#searchCabinet)" stroke="#22C55E" strokeWidth="3"/>
+    <rect x="32" y="57" width="136" height="201" rx="8" fill="#0a0b10"/>
+    <rect x="40" y="70" width="120" height="110" rx="6" fill="#1a1b22"/>
+    <rect x="48" y="78" width="104" height="94" rx="4" fill="#0E0F14"/>
+    {/* Magnifying Glass */}
+    <g transform="translate(100, 120)">
+      <g>
+        <animateTransform attributeName="transform" type="translate" 
+            values="-5,-5;5,5;-5,-5" dur="3s" repeatCount="indefinite"/>
+        {/* Glass circle */}
+        <circle cx="-5" cy="-5" r="28" fill="none" stroke="#22C55E" strokeWidth="4"/>
+        <circle cx="-5" cy="-5" r="22" fill="rgba(34,197,94,0.1)"/>
+        {/* Shine */}
+        <ellipse cx="-15" cy="-15" rx="6" ry="4" fill="#4ADE80" opacity="0.5" transform="rotate(-45 -15 -15)"/>
+        {/* Handle */}
+        <line x1="15" y1="15" x2="35" y2="35" stroke="#22C55E" strokeWidth="6" strokeLinecap="round"/>
+      </g>
+      {/* Data points being found */}
+      <circle cx="-10" cy="-8" r="3" fill="#4ADE80">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="5" r="2" fill="#4ADE80">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+      <circle cx="-15" cy="0" r="2.5" fill="#4ADE80">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="1s"/>
+      </circle>
+    </g>
+    {/* Controls */}
+    <rect x="45" y="190" width="110" height="55" rx="6" fill="#1a1b22"/>
+    <circle cx="75" cy="215" r="12" fill="#22C55E"/>
+    <circle cx="125" cy="215" r="12" fill="#0E0F14" stroke="#22C55E" strokeWidth="2"/>
+    {/* Header */}
+    <rect x="35" y="12" width="130" height="35" rx="6" fill="#22C55E"/>
+    <rect x="42" y="19" width="116" height="21" rx="4" fill="#0E0F14"/>
+    <text x="100" y="34" textAnchor="middle" fill="#22C55E" fontSize="11" fontWeight="bold">AUDIT</text>
+    <circle cx="45" cy="10" r="4" fill="#4ADE80">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="155" cy="10" r="4" fill="#4ADE80">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite" begin="0.25s"/>
+    </circle>
+    <defs>
+      <linearGradient id="searchCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2a2b32"/>
+        <stop offset="100%" stopColor="#1a1b22"/>
+      </linearGradient>
+    </defs>
+  </svg>
+)
+
+// 06 - MARKETING: Claw Machine / Gancho de Peluches (Orange)
+const ClawMachine = () => (
+  <svg viewBox="0 0 200 280" className="w-full h-full drop-shadow-2xl">
+    {/* Cabinet */}
+    <rect x="20" y="45" width="160" height="220" rx="10" 
+          fill="url(#clawCabinet)" stroke="#F2921D" strokeWidth="3"/>
+    <rect x="27" y="52" width="146" height="206" rx="8" fill="#0a0b10"/>
+    {/* Glass display area */}
+    <rect x="35" y="65" width="130" height="130" rx="6" fill="#1a1b22"/>
+    <rect x="35" y="65" width="130" height="130" rx="6" fill="url(#glassGlow)" opacity="0.3"/>
+    {/* Claw mechanism */}
+    <g transform="translate(100, 85)">
+      {/* Rail */}
+      <rect x="-55" y="-15" width="110" height="6" rx="2" fill="#333"/>
+      {/* Claw arm */}
+      <g>
+        <animateTransform attributeName="transform" type="translate" 
+            values="0,0;20,0;20,40;20,35;0,35;0,0" dur="5s" repeatCount="indefinite"/>
+        <rect x="-3" y="-10" width="6" height="50" fill="#F2921D"/>
+        {/* Claw prongs */}
+        <g transform="translate(0, 40)">
+          <animateTransform attributeName="transform" type="scale" 
+              values="1,1;1,1;1,1;0.7,1;0.7,1;1,1" dur="5s" repeatCount="indefinite"/>
+          <path d="M0,0 L-15,20 L-10,22 L0,8" fill="#F2921D"/>
+          <path d="M0,0 L15,20 L10,22 L0,8" fill="#F2921D"/>
+          <path d="M0,0 L0,22 L-3,20 L0,8 L3,20 L0,22" fill="#ffb54d"/>
+        </g>
+      </g>
+    </g>
+    {/* Plushies/prizes */}
+    <g transform="translate(100, 165)">
+      {/* Pink bear */}
+      <g transform="translate(-35, 0)">
+        <circle cx="0" cy="0" r="12" fill="#B2174B"/>
+        <circle cx="-5" cy="-3" r="2" fill="#FFF1E6"/>
+        <circle cx="5" cy="-3" r="2" fill="#FFF1E6"/>
+        <ellipse cx="0" cy="4" rx="3" ry="2" fill="#ff6b9d"/>
+        <circle cx="-10" cy="-8" r="5" fill="#B2174B"/>
+        <circle cx="10" cy="-8" r="5" fill="#B2174B"/>
+      </g>
+      {/* Yellow star */}
+      <g transform="translate(0, 5)">
+        <polygon points="0,-12 3,-4 12,-4 5,2 8,11 0,6 -8,11 -5,2 -12,-4 -3,-4" fill="#F2921D"/>
+      </g>
+      {/* Cyan ball */}
+      <g transform="translate(35, 0)">
+        <circle cx="0" cy="0" r="10" fill="#06B6D4"/>
+        <ellipse cx="-3" cy="-3" rx="4" ry="3" fill="#22D3EE" opacity="0.6"/>
+      </g>
+      {/* Purple cube */}
+      <g transform="translate(15, -15)">
+        <rect x="-7" y="-7" width="14" height="14" rx="2" fill="#A855F7"/>
+      </g>
+      {/* Green blob */}
+      <g transform="translate(-20, -20)">
+        <ellipse cx="0" cy="0" rx="8" ry="6" fill="#22C55E"/>
+      </g>
+    </g>
+    {/* Controls */}
+    <rect x="35" y="200" width="130" height="50" rx="6" fill="#1a1b22"/>
+    {/* Joystick */}
+    <g transform="translate(70, 225)">
+      <ellipse cx="0" cy="8" rx="12" ry="6" fill="#0E0F14"/>
+      <rect x="-4" y="-8" width="8" height="16" rx="4" fill="#F2921D"/>
+      <circle cx="0" cy="-8" r="6" fill="#ffb54d"/>
+    </g>
+    {/* Button */}
+    <circle cx="130" cy="225" r="14" fill="#B2174B">
+      <animate attributeName="fill" values="#B2174B;#ff3366;#B2174B" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <text x="130" y="229" textAnchor="middle" fill="#FFF1E6" fontSize="8" fontWeight="bold">GO!</text>
+    {/* Prize chute */}
+    <rect x="75" y="250" width="50" height="15" rx="4" fill="#0E0F14"/>
+    {/* Header */}
+    <rect x="30" y="8" width="140" height="35" rx="6" fill="#F2921D"/>
+    <rect x="38" y="15" width="124" height="21" rx="4" fill="#0E0F14"/>
+    <text x="100" y="30" textAnchor="middle" fill="#F2921D" fontSize="11" fontWeight="bold">CLAW ADS</text>
+    {/* Lights */}
+    <circle cx="40" cy="6" r="4" fill="#FFF1E6">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="70" cy="6" r="4" fill="#B2174B">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.4s" repeatCount="indefinite" begin="0.1s"/>
+    </circle>
+    <circle cx="100" cy="6" r="4" fill="#F2921D">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.4s" repeatCount="indefinite" begin="0.2s"/>
+    </circle>
+    <circle cx="130" cy="6" r="4" fill="#06B6D4">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.4s" repeatCount="indefinite" begin="0.3s"/>
+    </circle>
+    <circle cx="160" cy="6" r="4" fill="#22C55E">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.4s" repeatCount="indefinite" begin="0.4s"/>
+    </circle>
+    <defs>
+      <linearGradient id="clawCabinet" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#2a2b32"/>
+        <stop offset="100%" stopColor="#1a1b22"/>
+      </linearGradient>
+      <linearGradient id="glassGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#F2921D" stopOpacity="0.2"/>
+        <stop offset="100%" stopColor="#0E0F14" stopOpacity="0"/>
       </linearGradient>
     </defs>
   </svg>
@@ -321,125 +426,150 @@ const colorConfig: Record<string, { hex: string; light: string; rgb: string }> =
 
 const services = [
   {
-    id: "gancho",
-    name: "GANCHO",
-    subtitle: "Máquina de Captación",
-    icon: Magnet,
+    id: "acompanamiento",
+    name: "ACOMPAÑAMIENTO",
+    number: "01",
+    subtitle: "Estratégico",
+    icon: Compass,
     color: "orange",
+    price: "350",
+    priceNote: "/mes",
     description: 
-      "Estrategias que atraen leads cualificados como imanes. " +
-      "Diseñamos sistemas de captación que convierten desconocidos en clientes.",
+      "Para personas que crean su propio contenido pero no logran resultados.",
     longDescription: 
-      "En READY? sabemos que la captación es el primer nivel del juego. " +
-      "Creamos embudos de conversión optimizados, lead magnets irresistibles y " +
-      "automatizaciones inteligentes que trabajan 24/7 para tu marca.",
+      "Analizamos tu marca, corregimos errores, definimos formatos, " +
+      "aplicamos tendencias y creamos un plan claro para avanzar. " +
+      "Incluye calendario, seguimiento, revisión de vídeos y estrategia aplicada a tu nicho.",
     features: [
-      "Estrategia de captación multicanal",
-      "Funnels de conversión optimizados",
-      "Lead magnets irresistibles",
-      "Automatización inteligente",
-      "Segmentación avanzada",
-      "Nurturing personalizado"
+      "Estudio completo de tu marca",
+      "Estrategia de contenido",
+      "Formatos y referencias",
+      "Calendario mensual",
+      "Aplicación de tendencias",
+      "Revisión y feedback continuo",
+      "Guía para grabar y mejorar retención"
     ],
-    stat: { value: "+340%", label: "Conversión media" },
-    machine: GanchoMachine
+    machine: CompassMachine
   },
   {
-    id: "pinball",
-    name: "PINBALL",
-    subtitle: "Máquina de Branding",
-    icon: Target,
+    id: "contenido",
+    name: "CONTENIDO",
+    number: "02",
+    subtitle: "Creación",
+    icon: Video,
     color: "pink",
+    price: "desde 600",
+    priceNote: "/mes",
     description: 
-      "Tu marca rebotando en todas las mentes. " +
-      "Creamos identidades que no se olvidan.",
+      "Creamos contenido completo para tu marca: estrategia, guiones, grabación, edición y publicación.",
     longDescription: 
-      "Una marca sin identidad es como un pinball sin bolas. " +
-      "Diseñamos sistemas de marca completos que hacen que tu " +
-      "negocio destaque y sea recordado en cada interacción.",
+      "Aplicamos tendencias de forma personalizada para tu sector y tus objetivos. " +
+      "Puede aparecer el cliente o podemos crear contenido sin que él salga.",
     features: [
-      "Identidad visual completa",
-      "Tono de voz y storytelling",
-      "Manual de marca",
-      "Assets multiplataforma",
-      "Estrategia de posicionamiento",
-      "Arquitectura de marca"
+      "Estrategia personalizada",
+      "Investigación de formatos",
+      "Grabación profesional",
+      "Edición optimizada para redes",
+      "Publicación y programaciones",
+      "Contenido con tendencias adaptadas"
     ],
-    stat: { value: "98%", label: "Brand recall" },
-    machine: PinballMachine
+    machine: VideoMachine
   },
   {
-    id: "turbo",
-    name: "TURBO",
-    subtitle: "Máquina de Performance",
-    icon: Rocket,
+    id: "gestion-basica",
+    name: "GESTIÓN",
+    number: "03",
+    subtitle: "RRSS Básica",
+    icon: MessageSquare,
     color: "cyan",
+    price: "250",
+    priceNote: "/mes",
     description: 
-      "Velocidad y potencia en campañas pagadas. " +
-      "Resultados que se miden en euros, no en vanity metrics.",
+      "Nos encargamos de publicar, escribir copys, preparar portadas y mantener un perfil profesional.",
     longDescription: 
-      "El performance marketing es una carrera, y nosotros tenemos " +
-      "el motor más potente. Optimizamos cada euro invertido para " +
-      "maximizar tu retorno con datos en tiempo real.",
+      "Ideal para quien quiere delegar la parte técnica sin perder el control del contenido. " +
+      "Organización del feed y configuración de hashtags incluidos.",
     features: [
-      "Google & Meta Ads",
-      "Optimización continua A/B",
-      "Reporting en tiempo real",
-      "Escalado inteligente",
-      "Atribución avanzada",
-      "Audiencias predictivas"
+      "Publicaciones programadas",
+      "Textos optimizados",
+      "Portadas profesionales",
+      "Organización del feed",
+      "Configuración de hashtags y tendencias"
     ],
-    stat: { value: "5.2x", label: "ROAS promedio" },
-    machine: TurboMachine
+    machine: SocialMachine
   },
   {
-    id: "puzzle",
-    name: "PUZZLE",
-    subtitle: "Máquina de Contenido",
-    icon: Puzzle,
+    id: "gestion-pro",
+    name: "GESTIÓN PRO",
+    number: "04",
+    subtitle: "RRSS Avanzada",
+    icon: Rocket,
     color: "purple",
+    price: "500",
+    priceNote: "/mes",
     description: 
-      "Contenido que encaja perfecto y construye comunidad. " +
-      "Cada pieza suma al panorama completo.",
+      "Gestión completa orientada a ventas: funnels, automatizaciones y generación de oportunidades.",
     longDescription: 
-      "El contenido es el rey, pero solo si las piezas encajan. " +
-      "Creamos estrategias de contenido que conectan con tu audiencia " +
-      "y construyen comunidades leales alrededor de tu marca.",
+      "Ideal para marcas que quieren usar sus redes como un canal real de ventas. " +
+      "Incluye atención a clientes, mensajes estratégicos y prospección digital.",
     features: [
-      "Estrategia de contenidos",
-      "Producción audiovisual",
-      "Copywriting persuasivo",
-      "Community management",
-      "Calendario editorial",
-      "UGC y colaboraciones"
+      "Gestión completa de interacciones",
+      "Automatizaciones (ManyChat)",
+      "Funnels de venta en redes",
+      "Mensajería estratégica a leads",
+      "Prospección digital",
+      "Optimización continua para conversión"
     ],
-    stat: { value: "+200%", label: "Engagement" },
-    machine: PuzzleMachine
+    machine: RocketMachine
   },
   {
-    id: "gamemaster",
-    name: "GAME MASTER",
-    subtitle: "Máquina de Consultoría",
-    icon: Crown,
+    id: "auditoria",
+    name: "AUDITORÍA",
+    number: "05",
+    subtitle: "de Redes",
+    icon: Search,
     color: "green",
+    price: "150",
+    priceNote: "único",
     description: 
-      "La visión estratégica que tu negocio necesita. " +
-      "Jugamos en tu equipo para ganar.",
+      "Analizamos tu cuenta a fondo: errores, oportunidades, tendencias y estrategia.",
     longDescription: 
-      "A veces necesitas a alguien que vea el tablero completo. " +
-      "Ofrecemos consultoría estratégica para alinear todas las " +
-      "piezas de tu marketing y llevarte al siguiente nivel.",
+      "Entrega en PDF + sesión explicativa. Incluye análisis de formatos, " +
+      "revisión de identidad, plan de acción y referentes aplicables.",
     features: [
-      "Auditoría de marketing 360°",
-      "Plan estratégico anual",
-      "Workshops de equipo",
-      "Mentorías 1:1",
-      "KPIs y dashboards",
-      "Análisis competitivo"
+      "Estudio de cuenta",
+      "Análisis de formatos",
+      "Revisión de identidad",
+      "Estrategia propuesta",
+      "Plan de acción",
+      "Referentes y ejemplos"
     ],
-    stat: { value: "+150", label: "Marcas asesoradas" },
-    machine: GameMasterMachine
+    machine: SearchMachine
   },
+  {
+    id: "marketing",
+    name: "MARKETING",
+    number: "06",
+    subtitle: "Digital / Campañas",
+    icon: Megaphone,
+    color: "orange",
+    price: "desde 400",
+    priceNote: "/mes + inversión",
+    description: 
+      "Gestión de Publicidad en Meta / LinkedIn / Google orientadas a ventas o captación.",
+    longDescription: 
+      "Investigamos mercado, definimos público objetivo, creamos anuncios, " +
+      "optimizamos resultados y reportamos métricas con informe mensual.",
+    features: [
+      "Estudio del negocio y mercado",
+      "Estrategia publicitaria",
+      "Creación de anuncios y textos",
+      "Configuración de audiencias",
+      "Optimización continua",
+      "Informe mensual"
+    ],
+    machine: ClawMachine
+  }
 ]
 
 // ============================================
@@ -547,36 +677,46 @@ export function ServiciosTabs() {
       " />
 
       <div className="container relative mx-auto px-4 sm:px-6">
-        {/* Section Header */}
+        {/* Section Header - MAXIMALISTA */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-10 sm:mb-16 md:mb-24"
+          className="text-center mb-12 sm:mb-16 md:mb-24"
         >
-          <motion.div variants={itemVariants}>
-            <Badge variant="pixel" className="mb-5">
-              <Gamepad2 className="w-3 h-3 mr-2" />
-              SERVICIOS
-            </Badge>
+          {/* Micro label */}
+          <motion.div variants={itemVariants} className="mb-6">
+            <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-ready-cream/40">
+              <span className="w-10 h-px bg-gradient-to-r from-transparent to-cyan-500/50" />
+              QUÉ HACEMOS
+              <span className="w-10 h-px bg-gradient-to-l from-transparent to-cyan-500/50" />
+            </span>
           </motion.div>
+          
+          {/* Giant condensed title */}
           <motion.h2 
             variants={itemVariants}
-            className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6"
+            className="font-display uppercase leading-[0.8] tracking-tight mb-6"
+            style={{
+              fontSize: 'clamp(2.5rem, 12vw, 9rem)',
+              transform: 'scaleY(1.15)',
+            }}
           >
-            <span className="text-ready-cream">Nuestras </span>
-            <span className="
-              text-transparent bg-clip-text 
-              bg-gradient-to-r from-ready-orange to-ready-pink
-            ">
-              Máquinas
+            <span className="text-ready-cream block">NUESTROS</span>
+            <span 
+              className="text-transparent bg-clip-text block -mt-1 sm:-mt-3" 
+              style={{ backgroundImage: 'linear-gradient(135deg, #F2921D 0%, #B2174B 50%, #06B6D4 100%)' }}
+            >
+              SERVICIOS
             </span>
           </motion.h2>
+          
           <motion.p 
             variants={itemVariants}
-            className="text-base sm:text-lg text-ready-cream/70 max-w-2xl mx-auto leading-relaxed px-2"
+            className="text-sm sm:text-base text-ready-cream/50 max-w-xl mx-auto leading-relaxed font-body px-4"
           >
-            5 servicios diseñados para que tu marca suba de nivel.
+            No hacemos "vídeos bonitos". Hacemos comunicación que convierte, 
+            marcas que se diferencian y contenidos que generan comunidad.
           </motion.p>
         </motion.div>
 
@@ -590,23 +730,22 @@ export function ServiciosTabs() {
             transition={{ duration: 0.8, delay: 0.2, ease: easeOutExpo }}
             className="order-1 lg:order-1"
           >
-            {/* Mobile: Horizontal scroll tabs with indicators */}
+            {/* Mobile: Horizontal scroll tabs - MAXIMALISTA */}
             <div className="lg:hidden relative">
               {/* Scroll fade indicators */}
-              <div className="absolute left-0 top-0 bottom-4 w-6 bg-gradient-to-r from-ready-black to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 bottom-4 w-6 bg-gradient-to-l from-ready-black to-transparent z-10 pointer-events-none" />
+              <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-ready-black to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-ready-black to-transparent z-10 pointer-events-none" />
               
               {/* Tabs container */}
               <div 
                 ref={tabsScrollRef}
                 className="
-                  flex gap-2 overflow-x-auto pb-4 mb-4
+                  flex gap-3 overflow-x-auto pb-4 mb-4
                   scrollbar-hide -mx-4 px-6
                   snap-x snap-mandatory scroll-smooth
                 "
               >
                 {services.map((service) => {
-                  const Icon = service.icon
                   const isActive = activeService === service.id
                   const serviceColor = colorConfig[service.color] || colorConfig.orange
                   return (
@@ -614,20 +753,38 @@ export function ServiciosTabs() {
                       key={service.id}
                       data-service-id={service.id}
                       onClick={() => handleTabClick(service.id)}
-                      className="flex-shrink-0 flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] snap-center"
-                      style={isActive ? {
-                        backgroundColor: `rgba(${serviceColor.rgb}, 0.15)`,
-                        borderColor: serviceColor.hex,
-                        color: serviceColor.hex,
-                        boxShadow: `0 0 20px rgba(${serviceColor.rgb}, 0.3)`
-                      } : {
-                        backgroundColor: 'rgba(26,27,34,1)',
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        color: 'rgba(255,241,230,0.6)'
+                      className="flex-shrink-0 flex flex-col items-center gap-1 px-3 sm:px-4 py-3 transition-all duration-300 snap-center relative min-w-[70px]"
+                      style={{
+                        backgroundColor: isActive ? `rgba(${serviceColor.rgb}, 0.1)` : 'transparent',
                       }}
                     >
-                      <Icon className="w-4 h-4 flex-shrink-0" />
-                      <span className="font-display font-semibold text-xs sm:text-sm whitespace-nowrap">
+                      {/* Top accent bar */}
+                      <div 
+                        className="absolute top-0 left-1/2 -translate-x-1/2 h-0.5 transition-all duration-500"
+                        style={{
+                          width: isActive ? '80%' : '0%',
+                          backgroundColor: serviceColor.hex,
+                        }}
+                      />
+                      
+                      {/* Number */}
+                      <span 
+                        className="font-display text-xl sm:text-2xl transition-all duration-300"
+                        style={{ 
+                          color: isActive ? serviceColor.hex : 'rgba(255,241,230,0.25)',
+                          transform: 'scaleY(1.1)'
+                        }}
+                      >
+                        {service.number}
+                      </span>
+                      
+                      {/* Name */}
+                      <span 
+                        className="font-display uppercase text-[9px] sm:text-[10px] whitespace-nowrap tracking-wider transition-colors duration-300"
+                        style={{ 
+                          color: isActive ? '#FFF1E6' : 'rgba(255,241,230,0.4)',
+                        }}
+                      >
                         {service.name}
                       </span>
                     </button>
@@ -636,7 +793,7 @@ export function ServiciosTabs() {
               </div>
               
               {/* Dot indicators for mobile */}
-              <div className="flex justify-center gap-1.5 mt-2">
+              <div className="flex justify-center gap-2 mt-2">
                 {services.map((service) => {
                   const isActive = activeService === service.id
                   const serviceColor = colorConfig[service.color] || colorConfig.orange
@@ -644,10 +801,11 @@ export function ServiciosTabs() {
                     <button
                       key={service.id}
                       onClick={() => handleTabClick(service.id)}
-                      className="w-2 h-2 rounded-full transition-all duration-300"
+                      className="w-1.5 h-1.5 rounded-full transition-all duration-300"
                       style={{
-                        backgroundColor: isActive ? serviceColor.hex : 'rgba(255,241,230,0.2)',
-                        transform: isActive ? 'scale(1.3)' : 'scale(1)'
+                        backgroundColor: isActive ? serviceColor.hex : 'rgba(255,241,230,0.15)',
+                        transform: isActive ? 'scale(1.5)' : 'scale(1)',
+                        boxShadow: isActive ? `0 0 10px rgba(${serviceColor.rgb}, 0.5)` : 'none'
                       }}
                       aria-label={`Ir a ${service.name}`}
                     />
@@ -656,8 +814,8 @@ export function ServiciosTabs() {
               </div>
             </div>
 
-            {/* Desktop: Vertical tab list */}
-            <div className="hidden lg:flex flex-col gap-2">
+            {/* Desktop: Vertical tab list - MAXIMALISTA */}
+            <div className="hidden lg:flex flex-col gap-3">
               {services.map((service, index) => {
                 const Icon = service.icon
                 const isActive = activeService === service.id
@@ -666,47 +824,52 @@ export function ServiciosTabs() {
                   <motion.button
                     key={service.id}
                     onClick={() => setActiveService(service.id)}
-                    initial={{ opacity: 0, x: -20, filter: "blur(6px)" }}
+                    initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
                     animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
-                    transition={{ duration: 0.6, delay: 0.3 + index * 0.08, ease: easeOutExpo }}
-                    whileHover={{ x: 4 }}
-                    className="group relative flex items-center gap-4 px-5 py-4 rounded-xl text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] border-2"
-                    style={isActive ? {
-                      backgroundColor: `rgba(${serviceColor.rgb}, 0.1)`,
-                      borderColor: serviceColor.hex,
-                      boxShadow: `0 0 30px rgba(${serviceColor.rgb}, 0.12)`
-                    } : {
-                      backgroundColor: 'rgba(26,27,34,0.5)',
-                      borderColor: 'rgba(255,255,255,0.05)'
+                    transition={{ duration: 0.7, delay: 0.3 + index * 0.1, ease: easeOutExpo }}
+                    whileHover={{ x: 8, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group relative flex items-center gap-5 px-6 py-5 text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    style={{
+                      backgroundColor: isActive ? `rgba(${serviceColor.rgb}, 0.08)` : 'transparent',
                     }}
                   >
-                    {/* Icon */}
+                    {/* Left accent bar */}
                     <div 
-                      className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                      style={isActive ? {
-                        backgroundColor: serviceColor.hex,
-                        color: service.color === 'pink' || service.color === 'purple' ? '#fff' : '#0E0F14'
-                      } : {
-                        backgroundColor: 'rgba(255,255,255,0.05)',
-                        color: 'rgba(255,241,230,0.5)'
+                      className="absolute left-0 top-0 bottom-0 w-1 transition-all duration-500"
+                      style={{
+                        backgroundColor: isActive ? serviceColor.hex : 'rgba(255,255,255,0.05)',
+                        boxShadow: isActive ? `0 0 20px rgba(${serviceColor.rgb}, 0.5)` : 'none'
+                      }}
+                    />
+
+                    {/* Number */}
+                    <span 
+                      className="flex-shrink-0 w-12 font-display text-2xl transition-all duration-500"
+                      style={{ 
+                        color: isActive ? serviceColor.hex : 'rgba(255,241,230,0.2)',
+                        transform: 'scaleY(1.1)'
                       }}
                     >
-                      <Icon className="w-5 h-5" />
-                    </div>
+                      {service.number}
+                    </span>
 
                     {/* Text */}
                     <div className="flex-1 min-w-0">
                       <h3 
-                        className="font-display font-bold text-lg transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                        style={{ color: isActive ? serviceColor.hex : '#FFF1E6' }}
+                        className="font-display uppercase tracking-tight text-xl transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                        style={{ 
+                          color: isActive ? serviceColor.hex : '#FFF1E6',
+                          transform: 'scaleY(1.05)'
+                        }}
                       >
                         {service.name}
                       </h3>
                       <p className={`
-                        text-sm transition-colors duration-500 truncate
+                        text-xs uppercase tracking-[0.15em] transition-colors duration-500 truncate mt-1
                         ${isActive 
-                          ? 'text-ready-cream/70' 
-                          : 'text-ready-cream/40 group-hover:text-ready-cream/60'
+                          ? 'text-ready-cream/50' 
+                          : 'text-ready-cream/30 group-hover:text-ready-cream/40'
                         }
                       `}>
                         {service.subtitle}
@@ -718,21 +881,6 @@ export function ServiciosTabs() {
                       className={`w-5 h-5 flex-shrink-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isActive ? 'translate-x-0 opacity-100' : 'text-ready-cream/20 -translate-x-2 opacity-0 group-hover:opacity-50'}`}
                       style={{ color: isActive ? serviceColor.hex : undefined }}
                     />
-
-                    {/* Active indicator line */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full"
-                        style={{ backgroundColor: serviceColor.hex }}
-                        transition={{ 
-                          type: "spring", 
-                          stiffness: 400, 
-                          damping: 35,
-                          mass: 0.8
-                        }}
-                      />
-                    )}
                   </motion.button>
                 )
               })}
@@ -762,11 +910,11 @@ export function ServiciosTabs() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Content Area */}
+          {/* Right: Content Area - MAXIMALISTA */}
           <motion.div
-            initial={{ opacity: 0, x: 30, filter: "blur(8px)" }}
+            initial={{ opacity: 0, x: 40, filter: "blur(12px)" }}
             animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
-            transition={{ duration: 0.8, delay: 0.35, ease: easeOutExpo }}
+            transition={{ duration: 1, delay: 0.4, ease: easeOutExpo }}
             className="order-2 lg:order-2"
           >
             <AnimatePresence mode="wait">
@@ -777,11 +925,19 @@ export function ServiciosTabs() {
                 animate="animate"
                 exit="exit"
                 transition={{ duration: 0.5, ease: easeOutExpo }}
-                className="relative rounded-2xl overflow-visible border-2 transition-colors duration-500 bg-gradient-to-br from-ready-black-light to-ready-black"
-                style={{ borderColor: `rgba(${currentColor.rgb}, 0.3)` }}
+                className="relative overflow-visible"
               >
+                {/* Left accent bar */}
+                <div 
+                  className="absolute left-0 top-0 bottom-0 w-1 hidden md:block"
+                  style={{ 
+                    backgroundColor: currentColor.hex,
+                    boxShadow: `0 0 30px rgba(${currentColor.rgb}, 0.4)`
+                  }}
+                />
+
                 {/* Content Grid */}
-                <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-6 md:p-8">
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-4 sm:gap-6 md:pl-8 py-4">
                   
                   {/* Left: Machine SVG */}
                   <div className="
@@ -806,29 +962,60 @@ export function ServiciosTabs() {
 
                   {/* Right: Info */}
                   <div className="order-2 md:order-2 flex flex-col justify-center">
-                    {/* Stats Badge */}
+                    {/* Number + Price Row */}
                     <motion.div
                       initial={{ opacity: 0, x: 16, filter: "blur(4px)" }}
                       animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                      transition={{ delay: 0.15, duration: 0.5, ease: easeOutExpo }}
+                      transition={{ delay: 0.1, duration: 0.5, ease: easeOutExpo }}
+                      className="flex items-end gap-4 mb-4"
                     >
-                      <Badge 
-                        className="mb-4"
-                        style={{
-                          backgroundColor: currentColor.hex,
-                          color: currentService.color === 'pink' || currentService.color === 'purple' ? '#fff' : '#0E0F14',
-                          boxShadow: `0 0 15px rgba(${currentColor.rgb}, 0.4)`
+                      {/* Service Number */}
+                      <span 
+                        className="font-display leading-none"
+                        style={{ 
+                          fontSize: 'clamp(3rem, 8vw, 5rem)',
+                          color: currentColor.hex,
+                          opacity: 0.25,
+                          transform: 'scaleY(1.2)'
                         }}
                       >
-                        <Zap className="w-3 h-3 mr-1" />
-                        {currentService.stat.value} {currentService.stat.label}
-                      </Badge>
+                        {currentService.number}
+                      </span>
+                      
+                      {/* Price Badge */}
+                      <div className="mb-2">
+                        <div 
+                          className="inline-flex items-baseline gap-1 px-4 py-2 rounded-lg"
+                          style={{ 
+                            backgroundColor: `rgba(${currentColor.rgb}, 0.1)`,
+                            border: `1px solid rgba(${currentColor.rgb}, 0.2)`
+                          }}
+                        >
+                          <Euro className="w-4 h-4 mb-0.5" style={{ color: currentColor.hex }} />
+                          <span 
+                            className="font-display text-2xl sm:text-3xl"
+                            style={{ color: currentColor.hex }}
+                          >
+                            {currentService.price}
+                          </span>
+                          {currentService.priceNote && (
+                            <span className="text-ready-cream/40 text-xs ml-1">
+                              {currentService.priceNote}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </motion.div>
 
-                    {/* Title */}
+                    {/* Title - MAXIMALISTA */}
                     <motion.h3 
-                      className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-2"
-                      style={{ color: currentColor.hex }}
+                      className="font-display uppercase tracking-tight mb-2"
+                      style={{ 
+                        color: currentColor.hex,
+                        fontSize: 'clamp(1.5rem, 5vw, 3rem)',
+                        transform: 'scaleY(1.1)',
+                        lineHeight: 0.9
+                      }}
                       initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
                       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       transition={{ delay: 0.08, duration: 0.5, ease: easeOutExpo }}
@@ -837,7 +1024,7 @@ export function ServiciosTabs() {
                     </motion.h3>
                     
                     <motion.p 
-                      className="text-ready-cream/60 text-sm mb-4"
+                      className="text-ready-cream/40 text-xs uppercase tracking-[0.2em] mb-4"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.12, duration: 0.5, ease: easeOutExpo }}
@@ -847,7 +1034,7 @@ export function ServiciosTabs() {
 
                     {/* Description */}
                     <motion.p 
-                      className="text-ready-cream/80 leading-relaxed mb-6"
+                      className="text-ready-cream/60 leading-relaxed mb-6 font-body text-sm md:text-base"
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.18, duration: 0.5, ease: easeOutExpo }}
@@ -862,10 +1049,10 @@ export function ServiciosTabs() {
                       transition={{ delay: 0.25, duration: 0.5, ease: easeOutExpo }}
                     >
                       <p className="
-                        text-xs text-ready-cream/40 
-                        uppercase tracking-wider mb-3
+                        text-[10px] text-ready-cream/30 
+                        uppercase tracking-[0.3em] mb-3
                       ">
-                        Qué incluye:
+                        Qué incluye
                       </p>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {currentService.features.map((feature, i) => (
@@ -879,12 +1066,12 @@ export function ServiciosTabs() {
                               ease: easeOutExpo 
                             }}
                             className="
-                              flex items-center gap-2 
-                              text-sm text-ready-cream/70
+                              flex items-center gap-3 
+                              text-sm text-ready-cream/60
                             "
                           >
                             <div 
-                              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                              className="w-1 h-4 flex-shrink-0"
                               style={{ backgroundColor: currentColor.hex }}
                             />
                             {feature}
@@ -893,7 +1080,7 @@ export function ServiciosTabs() {
                       </ul>
                     </motion.div>
 
-                    {/* CTA Button */}
+                    {/* CTA Button - MAXIMALISTA */}
                     <motion.div
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -902,35 +1089,26 @@ export function ServiciosTabs() {
                     >
                       <a
                         href="#contacto"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:gap-3"
-                        style={{
-                          backgroundColor: currentColor.hex,
-                          color: currentService.color === 'pink' || currentService.color === 'purple' ? '#fff' : '#0E0F14',
-                          boxShadow: `0 0 0 rgba(${currentColor.rgb}, 0)`
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.boxShadow = `0 0 35px rgba(${currentColor.rgb}, 0.35)`
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.boxShadow = `0 0 0 rgba(${currentColor.rgb}, 0)`
-                        }}
+                        className="group inline-flex items-center gap-3 font-display uppercase tracking-wide text-sm transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                        style={{ color: currentColor.hex }}
                       >
-                        Quiero esta máquina
-                        <ChevronRight className="w-4 h-4" />
+                        <span className="group-hover:translate-x-1 transition-transform duration-300">
+                          Quiero esta máquina
+                        </span>
+                        <div 
+                          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                          style={{ 
+                            backgroundColor: currentColor.hex,
+                            color: currentService.color === 'pink' || currentService.color === 'purple' ? '#fff' : '#0E0F14',
+                            boxShadow: `0 0 20px rgba(${currentColor.rgb}, 0.3)`
+                          }}
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </div>
                       </a>
                     </motion.div>
                   </div>
                 </div>
-
-                {/* Glow Effects - Hidden on mobile to prevent overflow */}
-                <div 
-                  className="hidden md:block absolute -top-20 -right-20 w-60 h-60 rounded-full blur-3xl pointer-events-none opacity-20"
-                  style={{ backgroundColor: currentColor.hex }}
-                />
-                <div 
-                  className="hidden md:block absolute -bottom-20 -left-20 w-40 h-40 rounded-full blur-3xl pointer-events-none opacity-10"
-                  style={{ backgroundColor: currentColor.hex }}
-                />
               </motion.div>
             </AnimatePresence>
           </motion.div>

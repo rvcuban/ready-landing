@@ -482,33 +482,44 @@ export function Scores() {
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-ready-pink/5 rounded-full blur-3xl -translate-y-1/2" />
 
       <div className="container relative mx-auto px-6">
-        {/* Section Header */}
+        {/* Section Header - MAXIMALISTA */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           className="text-center mb-20"
         >
-          <motion.div variants={itemVariants}>
-            <Badge variant="pixel" className="mb-5">
-              <Trophy className="w-3 h-3 mr-2" />
+          {/* Micro label */}
+          <motion.div variants={itemVariants} className="mb-6">
+            <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-ready-cream/40">
+              <span className="w-8 h-px bg-purple-500/50" />
               LEVEL 03
-            </Badge>
+              <span className="w-8 h-px bg-purple-500/50" />
+            </span>
           </motion.div>
+          
+          {/* Giant condensed title */}
           <motion.h2 
             variants={itemVariants}
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="font-display uppercase leading-[0.85] tracking-tight mb-6"
+            style={{
+              fontSize: 'clamp(2.5rem, 10vw, 8rem)',
+              transform: 'scaleY(1.1)',
+            }}
           >
-            <span className="text-ready-cream">High </span>
-            <span className="text-gradient">Scores</span>
+            <span className="text-ready-cream">HIGH </span>
+            <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #A855F7, #F2921D)' }}>
+              SCORES
+            </span>
           </motion.h2>
+          
           <motion.p 
             variants={itemVariants}
-            className="text-lg text-ready-cream/70 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-ready-cream/50 max-w-2xl mx-auto leading-relaxed font-body"
           >
             Los números no mienten. Estos son los récords que hemos ayudado 
             a nuestros clientes a 
-            <span className="text-ready-orange font-semibold"> romper</span>.
+            <span className="text-ready-orange font-medium"> romper</span>.
           </motion.p>
         </motion.div>
 

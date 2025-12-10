@@ -88,28 +88,42 @@ export function Salon() {
       />
 
       <div className="container relative mx-auto px-6">
-        {/* Section Header */}
+        {/* Section Header - MAXIMALISTA */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: easeOutExpo }}
           className="text-center mb-20"
         >
+          {/* Micro label */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, ease: easeOutExpo }}
+            className="mb-6"
           >
-            <Badge variant="pixel" className="mb-6">
-              <Award className="w-3 h-3 mr-2" />
+            <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-ready-cream/40">
+              <span className="w-8 h-px bg-ready-pink/50" />
               LEVEL 01
-            </Badge>
+              <span className="w-8 h-px bg-ready-pink/50" />
+            </span>
           </motion.div>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-ready-cream">Bienvenido al </span>
-            <span className="text-gradient">Salón</span>
+          
+          {/* Giant condensed title */}
+          <h2 
+            className="font-display uppercase leading-[0.85] tracking-tight mb-6"
+            style={{
+              fontSize: 'clamp(2.5rem, 10vw, 8rem)',
+              transform: 'scaleY(1.1)',
+            }}
+          >
+            <span className="text-ready-cream">BIENVENIDO </span>
+            <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #F2921D, #B2174B)' }}>
+              AL SALÓN
+            </span>
           </h2>
-          <p className="text-lg md:text-xl text-ready-cream/60 max-w-2xl mx-auto leading-relaxed">
+          
+          <p className="text-base md:text-lg text-ready-cream/50 max-w-2xl mx-auto leading-relaxed font-body">
             No somos otra agencia más. Somos el arcade donde las marcas vienen a 
             <span className="text-ready-orange font-medium"> superar sus récords</span>.
           </p>

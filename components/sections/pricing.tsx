@@ -2,15 +2,13 @@
 
 import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { 
   Check, 
-  X, 
+  ChevronRight,
   Sparkles, 
   Crown, 
   Zap,
-  CreditCard
+  TrendingUp
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -45,65 +43,76 @@ const itemVariants = {
   }
 }
 
+// Color config matching the rest of the site
+const colorConfig: Record<string, { hex: string; rgb: string }> = {
+  orange: { hex: '#F2921D', rgb: '242,146,29' },
+  pink: { hex: '#B2174B', rgb: '178,23,75' },
+  cyan: { hex: '#06B6D4', rgb: '6,182,212' },
+}
+
 const plans = [
   {
-    id: "player-one",
-    name: "Player One",
-    subtitle: "Para empezar a jugar",
-    price: 900,
+    id: "pack-emprendedor",
+    name: "EMPRENDEDOR",
+    subtitle: "Para arrancar con todo",
+    price: "desde 650",
     period: "/mes",
-    description: "Ideal para marcas que quieren empezar a destacar con una base sólida.",
+    description: "Todo lo esencial para empezar a construir tu marca con estrategia.",
     icon: Zap,
     popular: false,
     features: [
-      { text: "1 servicio a elegir", included: true },
-      { text: "Reuniones quincenales", included: true },
-      { text: "Reporting mensual", included: true },
-      { text: "Soporte por email", included: true },
-      { text: "Consultoría estratégica", included: false },
-      { text: "Acceso a workshops", included: false },
+      "Auditoría inicial completa",
+      "Creación de contenido",
+      "Gestión básica de RRSS",
+      "Calendario mensual",
+    ],
+    notIncluded: [
+      "Gestión PRO",
+      "Optimización continua",
     ],
     cta: "Empezar",
-    color: "cream"
+    color: "cyan"
   },
   {
-    id: "pro-player",
-    name: "Pro Player",
-    subtitle: "Para subir de nivel",
-    price: 2500,
+    id: "pack-empresa",
+    name: "EMPRESA",
+    subtitle: "Para escalar de verdad",
+    price: "desde 1.200",
     period: "/mes",
-    description: "El pack completo para marcas que van en serio con su crecimiento.",
-    icon: Sparkles,
+    description: "La solución completa para marcas que van en serio con su crecimiento.",
+    icon: Crown,
     popular: true,
     features: [
-      { text: "3 servicios combinados", included: true },
-      { text: "Reuniones semanales", included: true },
-      { text: "Reporting en tiempo real", included: true },
-      { text: "Soporte prioritario", included: true },
-      { text: "Consultoría estratégica", included: true },
-      { text: "Acceso a workshops", included: false },
+      "Auditoría inicial completa",
+      "Creación de contenido PRO",
+      "Gestión avanzada de RRSS",
+      "Funnels y automatizaciones",
+      "Optimización continua",
+      "Reporting mensual",
     ],
-    cta: "Elegir Plan",
+    notIncluded: [],
+    cta: "Elegir Pack",
     color: "orange"
   },
   {
-    id: "master-player",
-    name: "Master Player",
-    subtitle: "Para dominar el juego",
-    price: 5000,
-    period: "/mes",
-    description: "Todo incluido. Para marcas que quieren ser leyendas de su sector.",
-    icon: Crown,
+    id: "booster-pack",
+    name: "BOOSTER",
+    subtitle: "1K / 5K / 10K seguidores",
+    price: "desde 1.200",
+    period: "/90 días",
+    description: "Objetivo claro: alcanzar tus metas de seguidores en 90 días.",
+    icon: TrendingUp,
     popular: false,
     features: [
-      { text: "Todos los servicios", included: true },
-      { text: "Equipo dedicado", included: true },
-      { text: "Dashboard personalizado", included: true },
-      { text: "Soporte 24/7", included: true },
-      { text: "Consultoría ilimitada", included: true },
-      { text: "Acceso VIP a workshops", included: true },
+      "Auditoría profesional",
+      "2 vídeos/semana (24 piezas)",
+      "Gestión básica de redes",
+      "Tendencias semanales",
+      "1 asesoría mensual",
+      "Optimización continua",
     ],
-    cta: "Contactar",
+    notIncluded: [],
+    cta: "Quiero crecer",
     color: "pink"
   },
 ]
@@ -117,172 +126,230 @@ export function Pricing() {
     <section
       id="pricing"
       ref={sectionRef}
-      className="relative py-28 md:py-40 overflow-hidden"
+      className="relative py-20 sm:py-28 md:py-36 lg:py-44 overflow-hidden"
     >
-      {/* Background */}
-      <div className="absolute inset-0 bg-ready-black-light" />
-      <div className="absolute inset-0 bg-arcade-grid opacity-5" />
+      {/* Background - MAXIMALISTA */}
+      <div className="absolute inset-0 bg-ready-black" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(242,146,29,0.05)_0%,transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(178,23,75,0.04)_0%,transparent_40%)]" />
 
-      <div className="container relative mx-auto px-6">
-        {/* Section Header */}
+      <div className="container relative mx-auto px-4 sm:px-6">
+        {/* Section Header - MAXIMALISTA */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="text-center mb-20"
+          className="text-center mb-16 sm:mb-20 md:mb-28"
         >
-          <motion.div variants={itemVariants}>
-            <Badge variant="pixel" className="mb-5">
-              <CreditCard className="w-3 h-3 mr-2" />
-              LEVEL 04
-            </Badge>
+          {/* Micro label */}
+          <motion.div variants={itemVariants} className="mb-6">
+            <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-ready-cream/40">
+              <span className="w-10 h-px bg-gradient-to-r from-transparent to-ready-orange/50" />
+              PACKS READY?
+              <span className="w-10 h-px bg-gradient-to-l from-transparent to-ready-orange/50" />
+            </span>
           </motion.div>
+          
+          {/* Giant title */}
           <motion.h2 
             variants={itemVariants}
-            className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="font-display uppercase leading-[0.8] tracking-tight mb-6"
+            style={{
+              fontSize: 'clamp(2.5rem, 12vw, 9rem)',
+              transform: 'scaleY(1.15)',
+            }}
           >
-            <span className="text-ready-cream">Elige tu </span>
-            <span className="text-gradient">Partida</span>
+            <span className="text-ready-cream block">ELIGE TU</span>
+            <span 
+              className="text-transparent bg-clip-text block -mt-1 sm:-mt-3" 
+              style={{ backgroundImage: 'linear-gradient(135deg, #F2921D 0%, #B2174B 100%)' }}
+            >
+              PARTIDA
+            </span>
           </motion.h2>
+          
           <motion.p 
             variants={itemVariants}
-            className="text-lg text-ready-cream/70 max-w-2xl mx-auto leading-relaxed"
+            className="text-sm sm:text-base text-ready-cream/50 max-w-xl mx-auto leading-relaxed"
           >
-            Planes diseñados para cada etapa de tu marca. 
-            Sin contratos eternos, sin sorpresas. 
-            <span className="text-ready-orange font-semibold"> Solo resultados</span>.
+            Soluciones completas diseñadas para cada etapa de tu marca.
+            <span className="text-ready-orange"> Sin contratos eternos. Solo resultados.</span>
           </motion.p>
         </motion.div>
 
-        {/* Pricing Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.id}
-              initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-              animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + index * 0.1, ease: easeOutExpo }}
-              whileHover={{ y: plan.popular ? -8 : -4 }}
-              onMouseEnter={() => setHoveredPlan(plan.id)}
-              onMouseLeave={() => setHoveredPlan(null)}
-              className={cn(
-                `relative rounded-2xl p-1 
-                 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]`,
-                plan.popular 
-                  ? "bg-gradient-to-b from-ready-orange to-ready-pink shadow-[0_0_40px_rgba(242,146,29,0.15)]" 
-                  : "bg-white/10",
-                hoveredPlan === plan.id && !plan.popular && "bg-white/15",
-                hoveredPlan === plan.id && "shadow-[0_24px_48px_rgba(0,0,0,0.35)]"
-              )}
-            >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge variant="pixel" className="bg-ready-orange text-ready-black border-none">
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    MÁS POPULAR
-                  </Badge>
-                </div>
-              )}
+        {/* Pricing Grid - MAXIMALISTA */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {plans.map((plan, index) => {
+            const planColor = colorConfig[plan.color] || colorConfig.orange
+            const isHovered = hoveredPlan === plan.id
+            
+            return (
+              <motion.div
+                key={plan.id}
+                initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
+                animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+                transition={{ duration: 0.8, delay: 0.2 + index * 0.15, ease: easeOutExpo }}
+                onMouseEnter={() => setHoveredPlan(plan.id)}
+                onMouseLeave={() => setHoveredPlan(null)}
+                className={cn(
+                  "relative group",
+                  plan.popular && "md:-mt-4 md:mb-4"
+                )}
+              >
+                {/* Popular indicator */}
+                {plan.popular && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 z-10"
+                  >
+                    <span 
+                      className="inline-flex items-center gap-1.5 px-4 py-1.5 text-[10px] uppercase tracking-[0.2em] font-display rounded-full"
+                      style={{ 
+                        backgroundColor: planColor.hex,
+                        color: '#0E0F14'
+                      }}
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      Más popular
+                    </span>
+                  </motion.div>
+                )}
 
-              <div className={cn(
-                "h-full rounded-xl p-5 sm:p-6 lg:p-8",
-                plan.popular ? "bg-ready-black-light" : "bg-ready-black"
-              )}>
-                {/* Icon */}
-                <div className={cn(
-                  "w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4",
-                  plan.color === 'orange' ? "bg-ready-orange/20" :
-                  plan.color === 'pink' ? "bg-ready-pink/20" : "bg-white/10"
-                )}>
-                  <plan.icon className={cn(
-                    "w-5 h-5 sm:w-6 sm:h-6",
-                    plan.color === 'orange' ? "text-ready-orange" :
-                    plan.color === 'pink' ? "text-ready-pink" : "text-ready-cream"
-                  )} />
-                </div>
-
-                {/* Header */}
-                <h3 className="font-display text-xl sm:text-2xl font-bold text-ready-cream">
-                  {plan.name}
-                </h3>
-                <p className={cn(
-                  "text-xs sm:text-sm mb-3 sm:mb-4",
-                  plan.color === 'orange' ? "text-ready-orange" :
-                  plan.color === 'pink' ? "text-ready-pink" : "text-ready-cream/60"
-                )}>
-                  {plan.subtitle}
-                </p>
-
-                {/* Price */}
-                <div className="mb-3 sm:mb-4">
-                  <span className="font-display text-3xl sm:text-4xl font-bold text-ready-cream">
-                    {plan.price}€
-                  </span>
-                  <span className="text-ready-cream/50 text-sm">{plan.period}</span>
-                </div>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-ready-cream/60 mb-4 sm:mb-6">
-                  {plan.description}
-                </p>
-
-                {/* Features */}
-                <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 sm:gap-3">
-                      {feature.included ? (
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-ready-orange/20 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-ready-orange" />
-                        </div>
-                      ) : (
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
-                          <X className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-ready-cream/30" />
-                        </div>
-                      )}
-                      <span className={cn(
-                        "text-xs sm:text-sm",
-                        feature.included ? "text-ready-cream/80" : "text-ready-cream/30"
-                      )}>
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA */}
-                <Button 
-                  variant={plan.popular ? "arcade" : "outline"}
-                  className="w-full"
+                {/* Card */}
+                <div 
+                  className={cn(
+                    "relative h-full p-6 sm:p-8 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                    "border border-white/5",
+                    isHovered && "border-white/10"
+                  )}
+                  style={{
+                    backgroundColor: plan.popular 
+                      ? `rgba(${planColor.rgb}, 0.03)` 
+                      : 'rgba(255,255,255,0.01)',
+                  }}
                 >
-                  {plan.cta}
-                </Button>
-              </div>
-            </motion.div>
-          ))}
+                  {/* Left accent bar */}
+                  <div 
+                    className="absolute left-0 top-0 bottom-0 w-1 transition-all duration-500"
+                    style={{
+                      backgroundColor: isHovered || plan.popular ? planColor.hex : 'rgba(255,255,255,0.05)',
+                      boxShadow: isHovered || plan.popular ? `0 0 20px rgba(${planColor.rgb}, 0.3)` : 'none'
+                    }}
+                  />
+
+                  {/* Icon + Name */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div 
+                      className="w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300"
+                      style={{
+                        backgroundColor: `rgba(${planColor.rgb}, 0.1)`,
+                      }}
+                    >
+                      <plan.icon className="w-6 h-6" style={{ color: planColor.hex }} />
+                    </div>
+                    <div>
+                      <h3 
+                        className="font-display uppercase tracking-tight text-2xl sm:text-3xl"
+                        style={{ 
+                          color: '#FFF1E6',
+                          transform: 'scaleY(1.05)'
+                        }}
+                      >
+                        {plan.name}
+                      </h3>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-ready-cream/40">
+                        {plan.subtitle}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Price - MAXIMALISTA */}
+                  <div className="mb-6">
+                    <div className="flex items-baseline gap-2">
+                      <span 
+                        className="font-display text-4xl sm:text-5xl"
+                        style={{ 
+                          color: planColor.hex,
+                          transform: 'scaleY(1.1)'
+                        }}
+                      >
+                        {plan.price}€
+                      </span>
+                      <span className="text-ready-cream/40 text-sm">{plan.period}</span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-ready-cream/50 text-sm mb-8 leading-relaxed">
+                    {plan.description}
+                  </p>
+
+                  {/* Features */}
+                  <div className="mb-8">
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-ready-cream/30 mb-4">
+                      Qué incluye
+                    </p>
+                    <ul className="space-y-3">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-3">
+                          <div 
+                            className="w-1 h-4 flex-shrink-0"
+                            style={{ backgroundColor: planColor.hex }}
+                          />
+                          <span className="text-sm text-ready-cream/70">{feature}</span>
+                        </li>
+                      ))}
+                      {/* Not included items */}
+                      {plan.notIncluded.map((feature, i) => (
+                        <li key={`not-${i}`} className="flex items-center gap-3 opacity-40">
+                          <div 
+                            className="w-1 h-4 flex-shrink-0 bg-ready-cream/20"
+                          />
+                          <span className="text-sm text-ready-cream/30 line-through">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* CTA - MAXIMALISTA */}
+                  <a
+                    href="#contacto"
+                    className="group/btn flex items-center justify-between w-full py-4 px-5 transition-all duration-300"
+                    style={{
+                      backgroundColor: plan.popular ? planColor.hex : `rgba(${planColor.rgb}, 0.1)`,
+                      color: plan.popular ? '#0E0F14' : planColor.hex
+                    }}
+                  >
+                    <span className="font-display uppercase tracking-wide text-sm">
+                      {plan.cta}
+                    </span>
+                    <ChevronRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                  </a>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
 
-        {/* Custom Quote */}
+        {/* Bottom CTA - MAXIMALISTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-          animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
-          transition={{ duration: 0.7, delay: 0.7, ease: easeOutExpo }}
-          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.8, ease: easeOutExpo }}
+          className="text-center mt-16 sm:mt-20"
         >
-          <p className="text-ready-cream/60">
-            ¿Necesitas algo diferente?{" "}
-            <a 
-              href="#contacto" 
-              className="
-                text-ready-orange hover:text-ready-orange/80 
-                font-semibold
-                transition-all duration-500
-                hover:tracking-wide
-              "
-            >
-              Hablemos de tu partida personalizada →
-            </a>
+          <p className="text-ready-cream/40 text-sm mb-4">
+            ¿Necesitas algo diferente?
           </p>
+          <a 
+            href="#contacto"
+            className="group inline-flex items-center gap-3 font-display uppercase tracking-wide text-sm text-ready-orange transition-all duration-300 hover:gap-4"
+          >
+            Hablemos de tu partida personalizada
+            <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </a>
         </motion.div>
       </div>
     </section>

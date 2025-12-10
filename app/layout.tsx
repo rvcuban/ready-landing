@@ -1,8 +1,15 @@
 import type { Metadata } from "next"
-import { Space_Grotesk, Inter, Press_Start_2P } from "next/font/google"
+import { Space_Grotesk, Inter, Press_Start_2P, Bebas_Neue } from "next/font/google"
 import "./globals.css"
 
 const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+})
+
+const bebasNeue = Bebas_Neue({
+  weight: "400",
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
@@ -83,7 +90,7 @@ export default function RootLayout({
   return (
     <html 
       lang="es" 
-      className={`${spaceGrotesk.variable} ${inter.variable} ${pressStart.variable}`}
+      className={`${bebasNeue.variable} ${spaceGrotesk.variable} ${inter.variable} ${pressStart.variable}`}
     >
       <body className="bg-ready-black text-ready-cream antialiased">
        

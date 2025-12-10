@@ -54,9 +54,17 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
         body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
         pixel: ['var(--font-press-start)', 'monospace'],
+      },
+      fontSize: {
+        // Maximalista typography scale
+        'display-sm': ['clamp(3rem, 8vw, 5rem)', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
+        'display-md': ['clamp(4rem, 12vw, 8rem)', { lineHeight: '0.85', letterSpacing: '-0.02em' }],
+        'display-lg': ['clamp(5rem, 15vw, 12rem)', { lineHeight: '0.8', letterSpacing: '-0.03em' }],
+        'display-xl': ['clamp(6rem, 20vw, 16rem)', { lineHeight: '0.75', letterSpacing: '-0.04em' }],
       },
       borderRadius: {
         lg: 'var(--radius)',

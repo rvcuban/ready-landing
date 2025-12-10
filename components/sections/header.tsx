@@ -83,9 +83,11 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="arcade" size="sm">
-              INSERT COIN
-            </Button>
+            <a href="#pricing">
+              <Button variant="arcade" size="sm">
+                INSERT COIN
+              </Button>
+            </a>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -130,14 +132,15 @@ export function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5, ease: easeOutExpo }}
               >
-                <Button 
-                  variant="arcade" 
-                  size="lg" 
-                  className="mt-4"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  INSERT COIN
-                </Button>
+                <a href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button 
+                    variant="arcade" 
+                    size="lg" 
+                    className="mt-4"
+                  >
+                    INSERT COIN
+                  </Button>
+                </a>
               </motion.div>
             </div>
           </motion.div>
