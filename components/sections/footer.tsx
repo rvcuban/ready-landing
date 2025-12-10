@@ -77,21 +77,21 @@ export function Footer() {
   return (
     <footer className="relative bg-ready-black border-t border-white/5">
       {/* Main Footer */}
-      <div className="container mx-auto px-6 py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 lg:py-20">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10">
           {/* Brand Column */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <motion.a 
               href="#"
-              className="flex items-center gap-2 mb-6"
+              className="flex items-center gap-2 mb-4 sm:mb-6"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <span className="font-display text-3xl font-bold text-ready-cream">
+              <span className="font-display text-2xl sm:text-3xl font-bold text-ready-cream">
                 READY<span className="text-ready-orange">?</span>
               </span>
             </motion.a>
-            <p className="text-ready-cream/60 mb-6 max-w-sm leading-relaxed">
+            <p className="text-ready-cream/60 mb-4 sm:mb-6 max-w-sm leading-relaxed text-sm sm:text-base">
               El arcade donde las marcas vienen a ganar. 
               Estrategia, creatividad y resultados que no puedes ignorar.
             </p>
@@ -141,17 +141,17 @@ export function Footer() {
 
           {/* Services Links */}
           <div>
-            <h4 className="font-display font-bold text-ready-cream mb-5">
+            <h4 className="font-display font-bold text-ready-cream mb-3 sm:mb-5 text-sm sm:text-base">
               Servicios
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {footerLinks.servicios.map((link, index) => (
                 <li key={index}>
                   <a 
                     href={link.href}
                     className="
                       text-ready-cream/50 hover:text-ready-orange 
-                      transition-colors duration-500 text-sm
+                      transition-colors duration-500 text-xs sm:text-sm
                     "
                   >
                     {link.label}
@@ -163,17 +163,17 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-display font-bold text-ready-cream mb-5">
+            <h4 className="font-display font-bold text-ready-cream mb-3 sm:mb-5 text-sm sm:text-base">
               Empresa
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {footerLinks.empresa.map((link, index) => (
                 <li key={index}>
                   <a 
                     href={link.href}
                     className="
                       text-ready-cream/50 hover:text-ready-orange 
-                      transition-colors duration-500 text-sm
+                      transition-colors duration-500 text-xs sm:text-sm
                     "
                   >
                     {link.label}
@@ -185,17 +185,17 @@ export function Footer() {
 
           {/* Legal Links */}
           <div>
-            <h4 className="font-display font-bold text-ready-cream mb-5">
+            <h4 className="font-display font-bold text-ready-cream mb-3 sm:mb-5 text-sm sm:text-base">
               Legal
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {footerLinks.legal.map((link, index) => (
                 <li key={index}>
                   <a 
                     href={link.href}
                     className="
                       text-ready-cream/50 hover:text-ready-orange 
-                      transition-colors duration-500 text-sm
+                      transition-colors duration-500 text-xs sm:text-sm
                     "
                   >
                     {link.label}
@@ -209,21 +209,21 @@ export function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/5">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-ready-cream/35 flex items-center gap-2">
-              © {currentYear} READY? Estudio Creativo. Todos los derechos reservados.
+        <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+            <p className="text-xs sm:text-sm text-ready-cream/35 flex items-center gap-2 text-center md:text-left">
+              © {currentYear} READY? Estudio Creativo.
             </p>
-            <p className="text-sm text-ready-cream/35 flex items-center gap-2">
-              Hecho con <Heart className="w-4 h-4 text-ready-pink fill-ready-pink" /> y muchas 
-              <Gamepad2 className="w-4 h-4 text-ready-orange mx-1" /> partidas
+            <p className="text-xs sm:text-sm text-ready-cream/35 flex items-center gap-1 sm:gap-2 flex-wrap justify-center">
+              Hecho con <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-ready-pink fill-ready-pink" /> y muchas 
+              <Gamepad2 className="w-3 h-3 sm:w-4 sm:h-4 text-ready-orange mx-1" /> partidas
             </p>
           </div>
         </div>
       </div>
 
-      {/* Easter Egg: Konami Code hint */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+      {/* Easter Egg: Konami Code hint - hidden on mobile */}
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 hidden sm:block">
         <p className="text-[10px] text-ready-cream/20 font-pixel tracking-wider">
           ↑↑↓↓←→←→BA
         </p>

@@ -29,7 +29,7 @@ const stats = [
     icon: TrendingUp, 
     value: 340, 
     suffix: "%", 
-    label: "ROI promedio",
+    label: "Visitas promedio",
     description: "Retorno sobre inversión"
   },
   { 
@@ -427,30 +427,30 @@ function StatCard({ stat, index, isInView }: {
       transition={{ duration: 0.7, delay: index * 0.1, ease: easeOutExpo }}
       className="relative group"
     >
-      <div className="p-8 rounded-2xl bg-white/5 border border-white/10 
+      <div className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10 
                      hover:border-ready-orange/40 
                      transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
                      hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
         {/* Icon */}
-        <div className="w-14 h-14 rounded-xl bg-ready-orange/15 
-                       flex items-center justify-center mb-6
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-ready-orange/15 
+                       flex items-center justify-center mb-4 sm:mb-6
                        group-hover:bg-ready-orange/25 
                        transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
                        group-hover:scale-105">
-          <stat.icon className="w-7 h-7 text-ready-orange" />
+          <stat.icon className="w-6 h-6 sm:w-7 sm:h-7 text-ready-orange" />
         </div>
 
         {/* Value */}
-        <div className="font-display text-5xl md:text-6xl font-bold text-ready-cream mb-2">
+        <div className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-ready-cream mb-2">
           {stat.value % 1 !== 0 ? count / 10 : count}
           <span className="text-ready-orange">{stat.suffix}</span>
         </div>
 
         {/* Label */}
-        <h3 className="text-xl font-semibold text-ready-cream mb-1">
+        <h3 className="text-lg sm:text-xl font-semibold text-ready-cream mb-1">
           {stat.label}
         </h3>
-        <p className="text-sm text-ready-cream/50">
+        <p className="text-xs sm:text-sm text-ready-cream/50">
           {stat.description}
         </p>
       </div>

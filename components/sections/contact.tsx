@@ -142,7 +142,7 @@ export function Contact() {
             {/* GAME OVER? con GLITCH REAL */}
             <motion.div variants={itemVariants} className="mb-4">
               <h2 
-                className="glitch-text font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-ready-orange"
+                className="glitch-text font-display text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-ready-orange leading-none"
                 data-text="GAME OVER?"
                 style={{
                   textShadow: '0 0 40px rgba(242, 146, 29, 0.4), 0 0 80px rgba(242, 146, 29, 0.2)'
@@ -251,22 +251,22 @@ export function Contact() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-16"
+                  className="flex flex-col items-center justify-center py-10 sm:py-16"
                 >
                   <div 
-                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mb-4 sm:mb-6"
                     style={{
                       background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.08) 100%)',
                       border: '2px solid rgba(34, 197, 94, 0.3)',
                       boxShadow: '0 0 40px rgba(34, 197, 94, 0.2)'
                     }}
                   >
-                    <CheckCircle className="w-10 h-10 text-green-400" />
+                    <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-green-400" />
                   </div>
-                  <h4 className="text-2xl font-display font-bold text-ready-cream mb-3">
+                  <h4 className="text-xl sm:text-2xl font-display font-bold text-ready-cream mb-2 sm:mb-3">
                     ¡MENSAJE ENVIADO!
                   </h4>
-                  <p className="text-ready-cream/60 text-center">
+                  <p className="text-ready-cream/60 text-center text-sm sm:text-base">
                     Te contactaremos en menos de 24h.
                     <br />
                     <span className="text-ready-orange">
@@ -275,11 +275,11 @@ export function Contact() {
                   </p>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-5">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                  <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
                     <div>
                       <label 
-                        className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                        className="text-[10px] sm:text-xs font-display font-bold uppercase tracking-widest block mb-1.5 sm:mb-2"
                         style={{ color: '#F2921D' }}
                       >
                         PLAYER NAME
@@ -290,12 +290,12 @@ export function Contact() {
                         onChange={handleChange}
                         placeholder="Tu nombre"
                         required
-                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 text-sm sm:text-base"
                       />
                     </div>
                     <div>
                       <label 
-                        className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                        className="text-[10px] sm:text-xs font-display font-bold uppercase tracking-widest block mb-1.5 sm:mb-2"
                         style={{ color: '#F2921D' }}
                       >
                         EMAIL
@@ -307,14 +307,14 @@ export function Contact() {
                         onChange={handleChange}
                         placeholder="tu@email.com"
                         required
-                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                        className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 text-sm sm:text-base"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label 
-                      className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                      className="text-[10px] sm:text-xs font-display font-bold uppercase tracking-widest block mb-1.5 sm:mb-2"
                       style={{ color: '#F2921D' }}
                     >
                       COMPANY
@@ -324,13 +324,13 @@ export function Contact() {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="Tu empresa (opcional)"
-                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30"
+                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 text-sm sm:text-base"
                     />
                   </div>
 
                   <div>
                     <label 
-                      className="text-xs font-display font-bold uppercase tracking-widest block mb-2"
+                      className="text-[10px] sm:text-xs font-display font-bold uppercase tracking-widest block mb-1.5 sm:mb-2"
                       style={{ color: '#F2921D' }}
                     >
                       MESSAGE
@@ -340,14 +340,14 @@ export function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="¿Qué máquina te interesa?"
-                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 min-h-[100px]"
+                      className="bg-black/50 border-ready-orange/20 focus:border-ready-orange focus:ring-ready-orange/20 placeholder:text-ready-cream/30 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                     />
                   </div>
 
                   <Button 
                     type="submit" 
                     size="lg" 
-                    className="w-full text-base font-display font-bold uppercase tracking-wide bg-gradient-to-r from-ready-orange to-ready-pink hover:from-ready-orange/90 hover:to-ready-pink/90 text-ready-black transition-all duration-500"
+                    className="w-full text-sm sm:text-base font-display font-bold uppercase tracking-wide bg-gradient-to-r from-ready-orange to-ready-pink hover:from-ready-orange/90 hover:to-ready-pink/90 text-ready-black transition-all duration-500"
                     style={{
                       boxShadow: '0 0 30px rgba(242, 146, 29, 0.3), 0 0 60px rgba(178, 23, 75, 0.15)'
                     }}
@@ -355,18 +355,18 @@ export function Contact() {
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                         ENVIANDO...
                       </>
                     ) : (
                       <>
-                        <Gamepad2 className="w-5 h-5 mr-2" />
+                        <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                         INSERTAR FICHA
                       </>
                     )}
                   </Button>
 
-                  <p className="text-center text-sm text-ready-cream/40 pt-2">
+                  <p className="text-center text-xs sm:text-sm text-ready-cream/40 pt-1 sm:pt-2">
                     Respondemos en menos de 24h.
                     <br />
                     <span className="text-ready-cream/50">

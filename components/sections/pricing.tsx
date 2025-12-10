@@ -155,7 +155,7 @@ export function Pricing() {
         </motion.div>
 
         {/* Pricing Grid */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.id}
@@ -186,28 +186,28 @@ export function Pricing() {
               )}
 
               <div className={cn(
-                "h-full rounded-xl p-6 lg:p-8",
+                "h-full rounded-xl p-5 sm:p-6 lg:p-8",
                 plan.popular ? "bg-ready-black-light" : "bg-ready-black"
               )}>
                 {/* Icon */}
                 <div className={cn(
-                  "w-12 h-12 rounded-xl flex items-center justify-center mb-4",
+                  "w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4",
                   plan.color === 'orange' ? "bg-ready-orange/20" :
                   plan.color === 'pink' ? "bg-ready-pink/20" : "bg-white/10"
                 )}>
                   <plan.icon className={cn(
-                    "w-6 h-6",
+                    "w-5 h-5 sm:w-6 sm:h-6",
                     plan.color === 'orange' ? "text-ready-orange" :
                     plan.color === 'pink' ? "text-ready-pink" : "text-ready-cream"
                   )} />
                 </div>
 
                 {/* Header */}
-                <h3 className="font-display text-2xl font-bold text-ready-cream">
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-ready-cream">
                   {plan.name}
                 </h3>
                 <p className={cn(
-                  "text-sm mb-4",
+                  "text-xs sm:text-sm mb-3 sm:mb-4",
                   plan.color === 'orange' ? "text-ready-orange" :
                   plan.color === 'pink' ? "text-ready-pink" : "text-ready-cream/60"
                 )}>
@@ -215,33 +215,33 @@ export function Pricing() {
                 </p>
 
                 {/* Price */}
-                <div className="mb-4">
-                  <span className="font-display text-4xl font-bold text-ready-cream">
+                <div className="mb-3 sm:mb-4">
+                  <span className="font-display text-3xl sm:text-4xl font-bold text-ready-cream">
                     {plan.price}€
                   </span>
-                  <span className="text-ready-cream/50">{plan.period}</span>
+                  <span className="text-ready-cream/50 text-sm">{plan.period}</span>
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-ready-cream/60 mb-6">
+                <p className="text-xs sm:text-sm text-ready-cream/60 mb-4 sm:mb-6">
                   {plan.description}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-3 mb-8">
+                <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3">
+                    <li key={i} className="flex items-center gap-2 sm:gap-3">
                       {feature.included ? (
-                        <div className="w-5 h-5 rounded-full bg-ready-orange/20 flex items-center justify-center">
-                          <Check className="w-3 h-3 text-ready-orange" />
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-ready-orange/20 flex items-center justify-center flex-shrink-0">
+                          <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-ready-orange" />
                         </div>
                       ) : (
-                        <div className="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center">
-                          <X className="w-3 h-3 text-ready-cream/30" />
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0">
+                          <X className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-ready-cream/30" />
                         </div>
                       )}
                       <span className={cn(
-                        "text-sm",
+                        "text-xs sm:text-sm",
                         feature.included ? "text-ready-cream/80" : "text-ready-cream/30"
                       )}>
                         {feature.text}

@@ -328,3 +328,232 @@
   animation: blink 1s step-end infinite;
 }
 
+/* ================================================
+   SCROLL EXPERIENCE STYLES
+   ================================================ */
+
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Section reveal animation */
+section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Scroll progress indicator glow */
+.scroll-progress-glow {
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+/* Navigation dots hover effect */
+.nav-dot-tooltip {
+  backdrop-filter: blur(8px);
+  animation: tooltip-appear 0.3s var(--ease-out-expo);
+}
+
+@keyframes tooltip-appear {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Floating particles optimization */
+.floating-particle {
+  will-change: transform, opacity;
+  contain: strict;
+}
+
+/* Scroll snap for sections (optional - enable if desired) */
+.scroll-snap-container {
+  scroll-snap-type: y proximity;
+}
+
+.scroll-snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Section transition effects */
+.section-enter {
+  opacity: 0;
+  transform: translateY(60px) scale(0.98);
+}
+
+.section-enter-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.8s var(--ease-out-expo);
+}
+
+/* Parallax depth layers */
+.parallax-slow {
+  transform: translateZ(-2px) scale(3);
+}
+
+.parallax-medium {
+  transform: translateZ(-1px) scale(2);
+}
+
+.parallax-fast {
+  transform: translateZ(0);
+}
+
+/* Scroll indicator animation */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* Section divider animations */
+@keyframes divider-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleX(0.95);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+}
+
+.divider-animated {
+  animation: divider-pulse 3s ease-in-out infinite;
+}
+
+/* ============================================ */
+/* Section Transition Effects                   */
+/* ============================================ */
+
+/* Smooth section transitions */
+main > section,
+main > div > section {
+  will-change: transform, opacity;
+}
+
+/* Section enter/exit animations */
+@keyframes section-enter {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Staggered children animation */
+@keyframes stagger-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Depth effect for scroll */
+.depth-layer {
+  transition: transform 0.1s ease-out;
+}
+
+/* Energy pulse between sections */
+@keyframes energy-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 146, 29, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(242, 146, 29, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(242, 146, 29, 0);
+  }
+}
+
+.energy-pulse {
+  animation: energy-pulse 2s infinite;
+}
+
+/* Traveling light effect */
+@keyframes traveling-light {
+  0% {
+    left: -20%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+
+.traveling-light::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, white, transparent);
+  animation: traveling-light 3s ease-in-out infinite;
+}
+
+/* Gradient border animation for active sections */
+@keyframes gradient-border {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-border {
+  background: linear-gradient(90deg, #F2921D, #B2174B, #06B6D4, #A855F7, #22C55E, #F2921D);
+  background-size: 300% 100%;
+  animation: gradient-border 4s ease infinite;
+}
+
+/* Konami mode styles */
+.konami-mode {
+  animation: konami-flash 0.5s ease-in-out;
+}
+
+.konami-mode * {
+  animation: konami-rainbow 2s linear infinite !important;
+}
+
+@keyframes konami-flash {
+  0%, 100% { filter: none; }
+  50% { filter: brightness(1.5) saturate(1.5); }
+}
+
+@keyframes konami-rainbow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+

@@ -9,7 +9,7 @@ import { Volume2, VolumeX } from "lucide-react"
 const UNLOCK_DATE = new Date("2025-12-28T00:00:00")
 
 // ¿Activar la broma? Pon false para desactivarla
-const PRANK_ENABLED = true
+const PRANK_ENABLED = false
 
 // GIF para la broma - Ichi Ni San Bang (Tenor Post ID)
 const TENOR_POST_ID = "2001701211027057759"

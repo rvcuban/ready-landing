@@ -48,12 +48,13 @@ export function Hero() {
 
   const stats = [
     { icon: Trophy, value: "+150", label: "Marcas transformadas" },
-    { icon: Zap, value: "300%", label: "ROI promedio" },
+    { icon: Zap, value: "300%", label: "Visita promedio" },
     { icon: Gamepad2, value: "5", label: "Máquinas de poder" },
   ]
 
   return (
     <section
+      id="hero"
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
@@ -146,8 +147,8 @@ export function Hero() {
           {/* Main Headline */}
           <motion.h1
             variants={itemVariants}
-            className="font-display text-5xl md:text-7xl lg:text-8xl font-bold 
-                       mb-8 leading-[1.1] tracking-tight"
+            className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold 
+                       mb-6 sm:mb-8 leading-[1.1] tracking-tight"
           >
             <span className="text-ready-cream">¿Tu marca hace </span>
             <span className="text-gradient">ruido</span>
@@ -172,12 +173,12 @@ export function Hero() {
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-lg md:text-xl text-ready-cream/60 max-w-2xl mx-auto 
-                       mb-12 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-ready-cream/60 max-w-2xl mx-auto 
+                       mb-8 sm:mb-12 leading-relaxed px-4 sm:px-0"
           >
-            Somos la agencia que convierte marcas olvidadas en{" "}
+            Somos la agencia que introduce marcas olvidadas {" "}
             <span className="text-ready-orange font-medium">
-              leyendas del arcade
+              de Nuevo en el Juego
             </span>
             . Estrategia, creatividad y resultados que no puedes ignorar.
           </motion.p>
@@ -185,7 +186,7 @@ export function Hero() {
           {/* Stats Row */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-6 md:gap-10 mb-14"
+            className="flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-10 mb-10 sm:mb-14 px-2"
           >
             {stats.map((stat, index) => (
               <motion.div 
@@ -194,20 +195,20 @@ export function Hero() {
                   y: -2, 
                   transition: { duration: 0.3, ease: easeOutQuart } 
                 }}
-                className="flex items-center gap-3 px-4 py-2 rounded-xl 
+                className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 rounded-xl 
                            bg-white/[0.03] border border-white/[0.06]
                            hover:border-ready-orange/20 hover:bg-white/[0.05]
                            transition-colors duration-500"
               >
-                <div className="w-10 h-10 rounded-lg bg-ready-orange/10 
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-ready-orange/10 
                                flex items-center justify-center">
-                  <stat.icon className="w-5 h-5 text-ready-orange" />
+                  <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-ready-orange" />
                 </div>
                 <div className="text-left">
-                  <div className="font-display text-xl font-bold text-ready-cream">
+                  <div className="font-display text-lg sm:text-xl font-bold text-ready-cream">
                     {stat.value}
                   </div>
-                  <div className="text-xs text-ready-cream/40">{stat.label}</div>
+                  <div className="text-[10px] sm:text-xs text-ready-cream/40">{stat.label}</div>
                 </div>
               </motion.div>
             ))}
@@ -216,14 +217,15 @@ export function Hero() {
           {/* CTA Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0"
           >
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2, ease: easeOutQuart }}
+              className="w-full sm:w-auto"
             >
-              <Button variant="arcade" size="xl">
+              <Button variant="arcade" size="xl" className="w-full sm:w-auto">
                 <Gamepad2 className="w-5 h-5 mr-2" />
                 INSERTAR MONEDA
               </Button>
@@ -232,8 +234,9 @@ export function Hero() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ duration: 0.2, ease: easeOutQuart }}
+              className="w-full sm:w-auto"
             >
-              <Button variant="outline" size="xl">
+              <Button variant="outline" size="xl" className="w-full sm:w-auto">
                 VER HIGH SCORES
               </Button>
             </motion.div>

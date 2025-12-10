@@ -12,6 +12,8 @@ import {
   Footer 
 } from "@/components/sections"
 import { PrankCountdown } from "@/components/prank-countdown"
+import ScrollExperience, { SectionDivider } from "@/components/scroll-experience"
+import SectionWrapper from "@/components/section-wrapper"
 
 // Konami Code Easter Egg
 const KONAMI_CODE = [
@@ -81,6 +83,9 @@ export default function Home() {
 
   return (
     <PrankCountdown>
+      {/* Scroll Experience - Navigation dots, progress bar, particles */}
+      <ScrollExperience />
+
       {/* Konami Easter Egg Overlay */}
       {konamiActivated && (
         <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center">
@@ -99,29 +104,49 @@ export default function Home() {
       <Header />
 
       {/* Main Content */}
-      <main>
+      <main className="relative">
+        {/* Hero - No wrapper, should be instantly visible */}
         <Hero />
         
-        {/* Section Divider */}
-        <div className="section-divider" />
+        {/* Hero → Salon: Orange to Pink energy beam */}
+        <SectionDivider color="#F2921D" nextColor="#B2174B" variant="energy" />
         
-        <Salon />
+        {/* Salon Section with slide animation */}
+        <SectionWrapper animation="slide" parallax parallaxIntensity={30}>
+          <Salon />
+        </SectionWrapper>
         
-        <div className="section-divider" />
+        {/* Salon → Servicios: Pink to Cyan arcade style */}
+        <SectionDivider color="#B2174B" nextColor="#06B6D4" variant="arcade" />
         
-        <ServiciosTabs />
+        {/* Servicios Section with arcade animation */}
+        <SectionWrapper animation="arcade" parallax parallaxIntensity={20}>
+          <ServiciosTabs />
+        </SectionWrapper>
         
-        <div className="section-divider" />
+        {/* Servicios → Scores: Cyan to Purple pixel cascade */}
+        <SectionDivider color="#06B6D4" nextColor="#A855F7" variant="pixel" />
         
-        <Scores />
+        {/* Scores Section with scale animation */}
+        <SectionWrapper animation="scale" parallax parallaxIntensity={25}>
+          <Scores />
+        </SectionWrapper>
         
-        <div className="section-divider" />
+        {/* Scores → Pricing: Purple to Green energy beam */}
+        <SectionDivider color="#A855F7" nextColor="#22C55E" variant="energy" />
         
-        <Pricing />
+        {/* Pricing Section with slide animation */}
+        <SectionWrapper animation="slide" parallax parallaxIntensity={20}>
+          <Pricing />
+        </SectionWrapper>
         
-        <div className="section-divider" />
+        {/* Pricing → Contact: Green wave */}
+        <SectionDivider color="#22C55E" nextColor="#F2921D" variant="wave" />
         
-        <Contact />
+        {/* Contact Section with arcade animation */}
+        <SectionWrapper animation="arcade">
+          <Contact />
+        </SectionWrapper>
       </main>
 
       {/* Footer */}
