@@ -186,6 +186,33 @@ function VideoModal({
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Exit fullscreen helper function
+  const exitFullscreen = async () => {
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+      } else if ((document as any).webkitFullscreenElement) {
+        await (document as any).webkitExitFullscreen()
+      }
+    } catch (err) {
+      console.log('Exit fullscreen error:', err)
+    }
+  }
+
+  // Enhanced close handler that exits fullscreen first
+  const handleClose = async () => {
+    // Pause video
+    if (videoRef.current) {
+      videoRef.current.pause()
+    }
+    // Exit fullscreen if active
+    await exitFullscreen()
+    // Restore body scroll
+    document.body.style.overflow = ""
+    // Close modal
+    onClose()
+  }
+
   // Detect mobile on mount
   useEffect(() => {
     setIsMobile(window.innerWidth < 768)
@@ -244,6 +271,8 @@ function VideoModal({
       if (!document.fullscreenElement && 
           !(document as any).webkitFullscreenElement && 
           isMobile && isOpen) {
+        // Restore scroll before closing
+        document.body.style.overflow = ""
         onClose()
       }
     }
@@ -259,7 +288,7 @@ function VideoModal({
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
+      if (e.key === "Escape") handleClose()
     }
     if (isOpen) {
       document.addEventListener("keydown", handleEsc)
@@ -269,7 +298,7 @@ function VideoModal({
       document.removeEventListener("keydown", handleEsc)
       document.body.style.overflow = ""
     }
-  }, [isOpen, onClose])
+  }, [isOpen])
 
   // Handle manual play (for when autoplay fails)
   const handlePlayVideo = async () => {
@@ -300,7 +329,7 @@ function VideoModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black"
-          onClick={onClose}
+          onClick={handleClose}
         >
           {/* Desktop: Vertical video container */}
           <motion.div
@@ -314,7 +343,7 @@ function VideoModal({
           >
             {/* Close Button */}
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="absolute top-4 right-4 z-50 w-12 h-12 rounded-full 
                         bg-black/60 backdrop-blur-sm border border-white/20
                         flex items-center justify-center
@@ -340,7 +369,7 @@ function VideoModal({
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => {
                   setIsPlaying(false)
-                  if (isMobile) onClose()
+                  if (isMobile) handleClose()
                 }}
               />
 
