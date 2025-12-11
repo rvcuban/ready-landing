@@ -115,8 +115,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Añade tu código de verificación de Google Search Console aquí
-    // google: "tu-codigo-de-verificacion",
+    google: "19kog6xevtJquup2IZBGq00kXmI7Gd8-YFjoNmKqPJ4",
   },
   category: "marketing",
 }
